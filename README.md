@@ -31,6 +31,13 @@ Baza de date este compusa din 6 tabele:
 Aplicatia este impartita structural in 3 nivele: controller, service si repository, pentru a scadea cuplarea claselor si a creste coeziunea acestora.
 Pentru realizarea endpoint-urilor am utilizat framework-ul pentru backend, Springboot, gestionarea request-urilor/response-urilor fiind mult mai usoara.
 Am realizat 4 exemple de endpoint-uri: POST, PUT, GET si DELETE. Acestea au fost realizate strict pe tabela blood_bank.
+
+Atat pentru POST cat si pentru PUT, se transmite un request body in format JSON, care contine datele ce vor a fii introduse/modificate in baza de date, iar apoi se transmite prin endpoint un response cu un mesaj de succes/eroare alaturi de un http status OK/Internal server error.
+
+In cazul unui GET, se acceseaza endpoint-ul /api/v1/bloodBank si se transmit toate datele, sub forma de array, din baza de date blood_bank, alaturi de un http code OK/No content/Internal server error.
+
+Pentru DELETE, se transmite la /api/v1/bloodBank/{bloodBankId} id-ul entry-ului din tabela blood_bank care va fii sters. Se transmite inapoi un mesaj de succes alaturi de un http code OK/Internal server error.
+
 ![POST](/docs/post.png)
 ![PUT](/docs/put.png)
 ![GET](/docs/get.png)
