@@ -2,6 +2,9 @@ package application.model;
 
 import javax.persistence.*;
 
+/**
+ * Class used for the blood_type table entity.
+ * */
 @Entity
 public class BloodType {
     @Id

@@ -1,7 +1,10 @@
 package application.model.response;
 
-import org.springframework.http.HttpStatus;
 
+
+/**
+ * Class used for general endpoint status response.
+ * */
 public class StatusResponse {
     private String message;
 

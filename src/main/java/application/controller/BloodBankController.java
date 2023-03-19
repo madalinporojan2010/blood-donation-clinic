@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * Class used for the blood bank table controller, which manages the requests taken from the endpoint.
+ * Usual POST, PUT, GET, DELETE methods.
+ * @see /api/{api_version}/bloodBank
+ * */
 @RestController
 @RequestMapping("/bloodBank")
 @CrossOrigin
@@ -18,6 +23,12 @@ public class BloodBankController {
     @Autowired
     private BloodBankService bloodBankService;
 
+    /**
+     * GET method.
+     * @param response Returned status
+     * @return Returns all the entries from the blood bank table.
+     * @see "/api/{api_version}/bloodBank GET"
+     * */
     @GetMapping("")
     public FetchBloodBankResponse findAllBloodBank(HttpServletResponse response) {
         List<BloodBank> fetchedBloodBank = bloodBankService.findAllBloodBank();
@@ -36,6 +47,15 @@ public class BloodBankController {
         return fetchBloodBankResponse;
     }
 
+
+    /**
+     * POST method.
+     * Saves the blood bank request in the database.
+     * @param response Returned status.
+     * @param bloodBankRequest Bound request from user endpoint access.
+     * @return Returns a Success or Error message.
+     * @see "/api/{api_version}/bloodBank POST"
+     * */
     @PostMapping("")
     public StatusResponse saveBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.saveBloodBank(bloodBankRequest.getBloodBank());
@@ -48,6 +68,15 @@ public class BloodBankController {
         return statusResponse;
     }
 
+
+    /**
+     * PUT method.
+     * Updates the blood bank request with the given id in the database.
+     * @param response Returned status.
+     * @param bloodBankRequest Bound request from user endpoint access.
+     * @return Returns a Success or Error message.
+     * @see "/api/{api_version}/bloodBank PUT"
+     * */
     @PutMapping("")
     public StatusResponse updateBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.updateBloodBank(bloodBankRequest.getBloodBank());
@@ -60,6 +89,15 @@ public class BloodBankController {
         return statusResponse;
     }
 
+
+    /**
+     * PUT method.
+     * Deletes a blood bank entry from the database, with the given id.
+     * @param response Returned status.
+     * @param bloodBankId Blood bank id from the user endpoint access.
+     * @return Returns a Success or Error message.
+     * @see "/api/{api_version}/bloodBank/{bloodBankId} DELETE"
+     * */
     @DeleteMapping("/{bloodBankId}")
     public StatusResponse deleteBloodBank(@PathVariable Long bloodBankId, HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.deleteBloodBank(bloodBankId);

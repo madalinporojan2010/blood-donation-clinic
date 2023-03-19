@@ -3,6 +3,9 @@ package application.model;
 
 import javax.persistence.*;
 
+/**
+ * Class used for the medical_staff table entity.
+ * */
 @Entity
 public class MedicalStaff {
 
