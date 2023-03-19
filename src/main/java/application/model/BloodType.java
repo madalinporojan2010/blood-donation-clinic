@@ -3,13 +3,14 @@ package application.model;
 import javax.persistence.*;
 
 @Entity
-public class BloodBank {
+public class BloodType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
-    private BloodType bloodType;
-    private Long quantity;
+
+    private String bloodType;
+
+    private String description;
 
     public Long getId() {
         return id;
@@ -19,19 +20,19 @@ public class BloodBank {
         this.id = id;
     }
 
-    public BloodType getBloodType() {
+    public String getBloodType() {
         return bloodType;
     }
 
-    public void setBloodType(BloodType bloodType) {
+    public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
 
-    public Long getQuantity() {
-        return quantity;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
