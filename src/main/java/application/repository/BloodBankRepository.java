@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
-    @Query(value = "select * from blood_bank", nativeQuery = true)
+    @Query(value = "SELECT * FROM blood_clinic.blood_bank", nativeQuery = true)
     List<BloodBank> findAllBloodBank();
 
 }

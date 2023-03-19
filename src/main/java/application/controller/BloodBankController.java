@@ -33,6 +33,7 @@ public class BloodBankController {
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+        System.out.println(fetchBloodBankResponse.getFetchedBloodBank().get(0).getBloodType());
         return fetchBloodBankResponse;
     }
 }

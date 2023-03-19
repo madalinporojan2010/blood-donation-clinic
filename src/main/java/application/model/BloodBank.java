@@ -7,10 +7,9 @@ public class BloodBank {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long quantity;
-
-    @ManyToOne
+    @OneToOne
     private BloodType bloodType;
+    private Long quantity;
 
     public Long getId() {
         return id;
@@ -20,19 +19,19 @@ public class BloodBank {
         this.id = id;
     }
 
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
     public BloodType getBloodType() {
         return bloodType;
     }
 
     public void setBloodType(BloodType bloodType) {
         this.bloodType = bloodType;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 }

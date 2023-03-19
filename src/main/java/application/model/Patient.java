@@ -7,24 +7,27 @@ import javax.persistence.*;
 public class Patient {
 
     @Id
-    private String cnp;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private int age;
     private String address;
     private String contactPersonName;
     private String name;
-    private String getContactPersonPhone;
+    private String contactPersonPhone;
     private String phone;
 
     @ManyToOne
     private BloodType bloodType;
 
-    public String getCnp() {
-        return cnp;
+    private String cnp;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setCnp(String cnp) {
-        this.cnp = cnp;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getAge() {
@@ -59,12 +62,12 @@ public class Patient {
         this.name = name;
     }
 
-    public String getGetContactPersonPhone() {
-        return getContactPersonPhone;
+    public String getContactPersonPhone() {
+        return contactPersonPhone;
     }
 
-    public void setGetContactPersonPhone(String getContactPersonPhone) {
-        this.getContactPersonPhone = getContactPersonPhone;
+    public void setContactPersonPhone(String contactPersonPhone) {
+        this.contactPersonPhone = contactPersonPhone;
     }
 
     public String getPhone() {
@@ -81,5 +84,13 @@ public class Patient {
 
     public void setBloodType(BloodType bloodType) {
         this.bloodType = bloodType;
+    }
+
+    public String getCnp() {
+        return cnp;
+    }
+
+    public void setCnp(String cnp) {
+        this.cnp = cnp;
     }
 }

@@ -5,16 +5,27 @@ import javax.persistence.*;
 @Entity
 public class BloodType {
     @Id
-    private String type;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String bloodType;
 
     private String description;
 
-    public String getType() {
-        return type;
+    public Long getId() {
+        return id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
     }
 
     public String getDescription() {
