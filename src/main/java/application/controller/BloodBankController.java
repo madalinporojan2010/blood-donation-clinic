@@ -1,11 +1,11 @@
 package application.controller;
 
 import application.model.BloodBank;
+import application.model.request.BloodBankRequest;
 import application.model.response.FetchBloodBankResponse;
 import application.model.response.StatusResponse;
 import application.service.BloodBankService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ public class BloodBankController {
     private BloodBankService bloodBankService;
 
     @GetMapping("")
-    public FetchBloodBankResponse checkApplicationHealth(HttpServletResponse response) {
+    public FetchBloodBankResponse findAllBloodBank(HttpServletResponse response) {
         List<BloodBank> fetchedBloodBank = bloodBankService.findAllBloodBank();
         FetchBloodBankResponse fetchBloodBankResponse = new FetchBloodBankResponse();
 
@@ -33,7 +33,42 @@ public class BloodBankController {
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        System.out.println(fetchBloodBankResponse.getFetchedBloodBank().get(0).getBloodType());
         return fetchBloodBankResponse;
+    }
+
+    @PostMapping("")
+    public StatusResponse saveBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
+        StatusResponse statusResponse = bloodBankService.saveBloodBank(bloodBankRequest.getBloodBank());
+
+        if(statusResponse.getMessage().toLowerCase().contains("success")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+        return statusResponse;
+    }
+
+    @PutMapping("")
+    public StatusResponse updateBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
+        StatusResponse statusResponse = bloodBankService.updateBloodBank(bloodBankRequest.getBloodBank());
+
+        if(statusResponse.getMessage().toLowerCase().contains("success")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+        return statusResponse;
+    }
+
+    @DeleteMapping("/{bloodBankId}")
+    public StatusResponse deleteBloodBank(@PathVariable Long bloodBankId, HttpServletResponse response) {
+        StatusResponse statusResponse = bloodBankService.deleteBloodBank(bloodBankId);
+
+        if(statusResponse.getMessage().toLowerCase().contains("success")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+        return statusResponse;
     }
 }

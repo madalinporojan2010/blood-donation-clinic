@@ -1,7 +1,6 @@
 package application.model.response;
 
 import application.model.BloodBank;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 

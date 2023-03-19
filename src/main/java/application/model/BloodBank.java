@@ -7,7 +7,7 @@ public class BloodBank {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private BloodType bloodType;
     private Long quantity;
 
