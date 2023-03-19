@@ -26,9 +26,15 @@ public class BloodBankService {
 
     public StatusResponse saveBloodBank(BloodBank bloodBank) {
         StatusResponse statusResponse = new StatusResponse();
+        Long foundId = null;
         try {
-            bloodBankRepository.save(bloodBank);
-            statusResponse.setMessage("success");
+            foundId = bloodBankRepository.findBloodBankByBloodTypeId(bloodBank.getBloodType().getId());
+            if(foundId != null) {
+                statusResponse.setMessage("error: blood type already present");
+            } else {
+                bloodBankRepository.save(bloodBank);
+                statusResponse.setMessage("success");
+            }
         } catch (Exception e) {
             System.out.println("[BloodBankService/saveBloodBank] error: " + e);
             statusResponse.setMessage("error");

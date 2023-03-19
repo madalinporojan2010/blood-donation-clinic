@@ -15,6 +15,9 @@ public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
     @Query(value = "SELECT * FROM blood_clinic.blood_bank", nativeQuery = true)
     List<BloodBank> findAllBloodBank();
 
+    @Query(value = "SELECT b.blood_type_id FROM blood_clinic.blood_bank b WHERE b.blood_type_id = :bloodTypeId", nativeQuery = true)
+    Long findBloodBankByBloodTypeId(@Param("bloodTypeId") Long bloodTypeId);
+
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO blood_clinic.blood_bank VALUES (:quantity, :bloodTypeId)", nativeQuery = true)
