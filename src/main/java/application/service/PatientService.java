@@ -1,51 +1,51 @@
 package application.service;
 
-import application.model.MedicalStaff;
+import application.model.Patient;
 import application.model.response.StatusResponse;
-import application.repository.MedicalStaffRepository;
+import application.repository.PatientRepository;
 import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Service class used for the medical staff table.
+ * Service class used for the blood type table.
  * Usual calls to the Repository Class, fetching database table data.
  */
 @Service
-public class MedicalStaffService {
+public class PatientService {
 
-    private final MedicalStaffRepository medicalStaffRepository;
+    private final PatientRepository patientRepository;
 
-    public MedicalStaffService(MedicalStaffRepository medicalStaffRepository) {
-        this.medicalStaffRepository = medicalStaffRepository;
+    public PatientService(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
     }
 
     /**
-     * Fetches all the entries from the medicalStaff table.
+     * Fetches all the entries from the patient table.
      *
-     * @return Returns fetched MedicalStaffs entries in a List.
+     * @return Returns fetched Patients entries in a List.
      */
-    public List<MedicalStaff> findAllMedicalStaffs() {
-        List<MedicalStaff> fetchedMedicalStaff = null;
+    public List<Patient> findAllPatients() {
+        List<Patient> fetchedPatient = null;
         try {
-            fetchedMedicalStaff = medicalStaffRepository.findAll();
+            fetchedPatient = patientRepository.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
         }
-        return fetchedMedicalStaff;
+        return fetchedPatient;
     }
 
     /**
-     * Saves a medicalStaff request to medicalStaff table.
+     * Saves a patient request to patient table.
      *
-     * @param medicalStaff Given MedicalStaff request body.
+     * @param patient Given Patient request body.
      * @return Success or error message.
      */
-    public StatusResponse saveMedicalStaff(MedicalStaff medicalStaff) {
+    public StatusResponse savePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            medicalStaffRepository.save(medicalStaff);
+            patientRepository.save(patient);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
@@ -55,16 +55,16 @@ public class MedicalStaffService {
     }
 
     /**
-     * Updates a medicalStaff entry with the given request body.
+     * Updates a patient entry with the given request body.
      *
-     * @param medicalStaff Given medicalStaff request body.
+     * @param patient Given patient request body.
      * @return Success or error message.
      */
-    public StatusResponse updateMedicalStaff(MedicalStaff medicalStaff) {
+    public StatusResponse updatePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (medicalStaffRepository.existsById(medicalStaff.getId())) {
-                medicalStaffRepository.save(medicalStaff);
+            if (patientRepository.existsById(patient.getId())) {
+                patientRepository.save(patient);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -77,16 +77,16 @@ public class MedicalStaffService {
     }
 
     /**
-     * Deletes a medicalStaff entry with the given id.
+     * Deletes a patient entry with the given id.
      *
-     * @param medicalStaffId Given medicalStaff id.
+     * @param patientId Given patient id.
      * @return Success or error message.
      */
-    public StatusResponse deleteMedicalStaff(Long medicalStaffId) {
+    public StatusResponse deletePatient(Long patientId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (medicalStaffRepository.existsById(medicalStaffId)) {
-                medicalStaffRepository.deleteById(medicalStaffId);
+            if (patientRepository.existsById(patientId)) {
+                patientRepository.deleteById(patientId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

@@ -1,51 +1,51 @@
 package application.service;
 
-import application.model.MedicalStaff;
+import application.model.Donation;
 import application.model.response.StatusResponse;
-import application.repository.MedicalStaffRepository;
+import application.repository.DonationRepository;
 import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Service class used for the medical staff table.
+ * Service class used for the donation table.
  * Usual calls to the Repository Class, fetching database table data.
  */
 @Service
-public class MedicalStaffService {
+public class DonationService {
 
-    private final MedicalStaffRepository medicalStaffRepository;
+    private final DonationRepository donationRepository;
 
-    public MedicalStaffService(MedicalStaffRepository medicalStaffRepository) {
-        this.medicalStaffRepository = medicalStaffRepository;
+    public DonationService(DonationRepository donationRepository) {
+        this.donationRepository = donationRepository;
     }
 
     /**
-     * Fetches all the entries from the medicalStaff table.
+     * Fetches all the entries from the donation table.
      *
-     * @return Returns fetched MedicalStaffs entries in a List.
+     * @return Returns fetched Donations entries in a List.
      */
-    public List<MedicalStaff> findAllMedicalStaffs() {
-        List<MedicalStaff> fetchedMedicalStaff = null;
+    public List<Donation> findAllDonations() {
+        List<Donation> fetchedDonation = null;
         try {
-            fetchedMedicalStaff = medicalStaffRepository.findAll();
+            fetchedDonation = donationRepository.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
         }
-        return fetchedMedicalStaff;
+        return fetchedDonation;
     }
 
     /**
-     * Saves a medicalStaff request to medicalStaff table.
+     * Saves a donation request to donation table.
      *
-     * @param medicalStaff Given MedicalStaff request body.
+     * @param donation Given Donation request body.
      * @return Success or error message.
      */
-    public StatusResponse saveMedicalStaff(MedicalStaff medicalStaff) {
+    public StatusResponse saveDonation(Donation donation) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            medicalStaffRepository.save(medicalStaff);
+            donationRepository.save(donation);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
@@ -55,16 +55,16 @@ public class MedicalStaffService {
     }
 
     /**
-     * Updates a medicalStaff entry with the given request body.
+     * Updates a donation entry with the given request body.
      *
-     * @param medicalStaff Given medicalStaff request body.
+     * @param donation Given donation request body.
      * @return Success or error message.
      */
-    public StatusResponse updateMedicalStaff(MedicalStaff medicalStaff) {
+    public StatusResponse updateDonation(Donation donation) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (medicalStaffRepository.existsById(medicalStaff.getId())) {
-                medicalStaffRepository.save(medicalStaff);
+            if (donationRepository.existsById(donation.getId())) {
+                donationRepository.save(donation);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -77,16 +77,16 @@ public class MedicalStaffService {
     }
 
     /**
-     * Deletes a medicalStaff entry with the given id.
+     * Deletes a donation entry with the given id.
      *
-     * @param medicalStaffId Given medicalStaff id.
+     * @param donationId Given donation id.
      * @return Success or error message.
      */
-    public StatusResponse deleteMedicalStaff(Long medicalStaffId) {
+    public StatusResponse deleteDonation(Long donationId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (medicalStaffRepository.existsById(medicalStaffId)) {
-                medicalStaffRepository.deleteById(medicalStaffId);
+            if (donationRepository.existsById(donationId)) {
+                donationRepository.deleteById(donationId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

@@ -1,10 +1,10 @@
 package application.controller;
 
-import application.model.MedicalStaff;
-import application.model.request.MedicalStaffRequest;
-import application.model.response.FetchMedicalStaffsResponse;
+import application.model.Patient;
+import application.model.request.PatientRequest;
+import application.model.response.FetchPatientsResponse;
 import application.model.response.StatusResponse;
-import application.service.MedicalStaffService;
+import application.service.PatientService;
 import application.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,20 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Class used for the medical staff table controller, which manages the requests
+ * Class used for the patient table controller, which manages the requests
  * taken from the endpoint.
  * Usual POST, PUT, GET, DELETE methods.
  *
- * @see /api/{api_version}/medicalStaff
+ * @see /api/{api_version}/patient
  */
 @RestController
-@RequestMapping("/medicalStaff")
+@RequestMapping("/patient")
 @CrossOrigin
-public class MedicalStaffController {
-    private final MedicalStaffService medicalStaffService;
+public class PatientController {
+    private final PatientService patientService;
 
-    public MedicalStaffController(MedicalStaffService medicalStaffService) {
-        this.medicalStaffService = medicalStaffService;
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
     }
 
     /**
@@ -33,16 +33,16 @@ public class MedicalStaffController {
      *
      * @param response Returned status
      * @return Returns all the entries from the blood type table.
-     * @see "/api/{api_version}/medicalStaff GET"
+     * @see "/api/{api_version}/patient GET"
      */
     @GetMapping("")
-    public FetchMedicalStaffsResponse findAllMedicalStaffs(HttpServletResponse response) {
-        List<MedicalStaff> fetchedMedicalStaffs = medicalStaffService.findAllMedicalStaffs();
-        FetchMedicalStaffsResponse fetchMedicalStaffResponse = new FetchMedicalStaffsResponse();
+    public FetchPatientsResponse findAllPatients(HttpServletResponse response) {
+        List<Patient> fetchedPatients = patientService.findAllPatients();
+        FetchPatientsResponse fetchPatientResponse = new FetchPatientsResponse();
 
-        if (fetchedMedicalStaffs != null) {
-            fetchMedicalStaffResponse.setFetchedMedicalStaffs(fetchedMedicalStaffs);
-            if (fetchedMedicalStaffs.size() == 0) {
+        if (fetchedPatients != null) {
+            fetchPatientResponse.setFetchedPatients(fetchedPatients);
+            if (fetchedPatients.size() == 0) {
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else {
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -50,22 +50,22 @@ public class MedicalStaffController {
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        return fetchMedicalStaffResponse;
+        return fetchPatientResponse;
     }
 
     /**
      * POST method.
      * Saves the blood type request in the database.
      *
-     * @param response            Returned status.
-     * @param medicalStaffRequest Bound request from user endpoint access.
+     * @param response       Returned status.
+     * @param patientRequest Bound request from user endpoint access.
      * @return Returns a Success or Error message.
-     * @see "/api/{api_version}/medicalStaff POST"
+     * @see "/api/{api_version}/patient POST"
      */
     @PostMapping("")
-    public StatusResponse saveMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest,
+    public StatusResponse savePatient(@RequestBody PatientRequest patientRequest,
             HttpServletResponse response) {
-        StatusResponse statusResponse = medicalStaffService.saveMedicalStaff(medicalStaffRequest.getMedicalStaff());
+        StatusResponse statusResponse = patientService.savePatient(patientRequest.getPatient());
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -79,15 +79,15 @@ public class MedicalStaffController {
      * PUT method.
      * Updates the blood type request with the given id in the database.
      *
-     * @param response            Returned status.
-     * @param medicalStaffRequest Bound request from user endpoint access.
+     * @param response       Returned status.
+     * @param patientRequest Bound request from user endpoint access.
      * @return Returns a Success or Error message.
-     * @see "/api/{api_version}/medicalStaff PUT"
+     * @see "/api/{api_version}/patient PUT"
      */
     @PutMapping("")
-    public StatusResponse updateMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest,
+    public StatusResponse updatePatient(@RequestBody PatientRequest patientRequest,
             HttpServletResponse response) {
-        StatusResponse statusResponse = medicalStaffService.updateMedicalStaff(medicalStaffRequest.getMedicalStaff());
+        StatusResponse statusResponse = patientService.updatePatient(patientRequest.getPatient());
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -103,14 +103,14 @@ public class MedicalStaffController {
      * PUT method.
      * Deletes a blood type entry from the database, with the given id.
      *
-     * @param response       Returned status.
-     * @param medicalStaffId Blood type id from the user endpoint access.
+     * @param response  Returned status.
+     * @param patientId Blood type id from the user endpoint access.
      * @return Returns a Success or Error message.
-     * @see "/api/{api_version}/medicalStaff/{medicalStaffId} DELETE"
+     * @see "/api/{api_version}/patient/{patientId} DELETE"
      */
-    @DeleteMapping("/{medicalStaffId}")
-    public StatusResponse deleteMedicalStaff(@PathVariable Long medicalStaffId, HttpServletResponse response) {
-        StatusResponse statusResponse = medicalStaffService.deleteMedicalStaff(medicalStaffId);
+    @DeleteMapping("/{patientId}")
+    public StatusResponse deletePatient(@PathVariable Long patientId, HttpServletResponse response) {
+        StatusResponse statusResponse = patientService.deletePatient(patientId);
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);

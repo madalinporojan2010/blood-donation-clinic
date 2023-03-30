@@ -3,7 +3,7 @@ package application.model.request;
 import application.model.MedicalStaff;
 
 /**
- * Class used for the blood type endpoint request binding.
+ * Class used for the medical staff endpoint request binding.
  */
 public class MedicalStaffRequest {
     private MedicalStaff medicalStaff;
