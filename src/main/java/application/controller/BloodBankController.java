@@ -68,6 +68,8 @@ public class BloodBankController {
 
         if (statusResponse.getMessage().toLowerCase().contains("success")) {
             response.setStatus(HttpServletResponse.SC_OK);
+        } else if (statusResponse.getMessage().toLowerCase().contains("id already present")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
