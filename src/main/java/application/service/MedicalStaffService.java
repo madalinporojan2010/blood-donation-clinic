@@ -21,7 +21,6 @@ public class MedicalStaffService {
         this.medicalStaffRepository = medicalStaffRepository;
     }
 
-
     /**
      * Fetches all the entries from the medicalStaff table.
      *
@@ -36,7 +35,6 @@ public class MedicalStaffService {
         }
         return fetchedMedicalStaff;
     }
-
 
     /**
      * Saves a medicalStaff request to medicalStaff table.

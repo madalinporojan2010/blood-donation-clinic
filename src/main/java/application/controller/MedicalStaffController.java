@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Class used for the blood type table controller, which manages the requests taken from the endpoint.
+ * Class used for the blood type table controller, which manages the requests
+ * taken from the endpoint.
  * Usual POST, PUT, GET, DELETE methods.
  *
  * @see /api/{api_version}/medicalStaff
@@ -52,18 +53,18 @@ public class MedicalStaffController {
         return fetchMedicalStaffResponse;
     }
 
-
     /**
      * POST method.
      * Saves the blood type request in the database.
      *
-     * @param response         Returned status.
+     * @param response            Returned status.
      * @param medicalStaffRequest Bound request from user endpoint access.
      * @return Returns a Success or Error message.
      * @see "/api/{api_version}/medicalStaff POST"
      */
     @PostMapping("")
-    public StatusResponse saveMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest, HttpServletResponse response) {
+    public StatusResponse saveMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest,
+            HttpServletResponse response) {
         StatusResponse statusResponse = medicalStaffService.saveMedicalStaff(medicalStaffRequest.getMedicalStaff());
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
@@ -74,18 +75,18 @@ public class MedicalStaffController {
         return statusResponse;
     }
 
-
     /**
      * PUT method.
      * Updates the blood type request with the given id in the database.
      *
-     * @param response         Returned status.
+     * @param response            Returned status.
      * @param medicalStaffRequest Bound request from user endpoint access.
      * @return Returns a Success or Error message.
      * @see "/api/{api_version}/medicalStaff PUT"
      */
     @PutMapping("")
-    public StatusResponse updateMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest, HttpServletResponse response) {
+    public StatusResponse updateMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest,
+            HttpServletResponse response) {
         StatusResponse statusResponse = medicalStaffService.updateMedicalStaff(medicalStaffRequest.getMedicalStaff());
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
@@ -98,12 +99,11 @@ public class MedicalStaffController {
         return statusResponse;
     }
 
-
     /**
      * PUT method.
      * Deletes a blood type entry from the database, with the given id.
      *
-     * @param response    Returned status.
+     * @param response       Returned status.
      * @param medicalStaffId Blood type id from the user endpoint access.
      * @return Returns a Success or Error message.
      * @see "/api/{api_version}/medicalStaff/{medicalStaffId} DELETE"

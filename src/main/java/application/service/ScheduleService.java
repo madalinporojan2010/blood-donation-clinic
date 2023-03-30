@@ -21,7 +21,6 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
-
     /**
      * Fetches all the entries from the schedule table.
      *
@@ -36,7 +35,6 @@ public class ScheduleService {
         }
         return fetchedSchedule;
     }
-
 
     /**
      * Saves a schedule request to schedule table.

@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Class used for the blood bank table controller, which manages the requests taken from the endpoint.
+ * Class used for the blood bank table controller, which manages the requests
+ * taken from the endpoint.
  * Usual POST, PUT, GET, DELETE methods.
  *
  * @see /api/{api_version}/bloodBank
@@ -52,7 +53,6 @@ public class BloodBankController {
         return fetchBloodBankResponse;
     }
 
-
     /**
      * POST method.
      * Saves the blood bank request in the database.
@@ -74,7 +74,6 @@ public class BloodBankController {
         return statusResponse;
     }
 
-
     /**
      * PUT method.
      * Updates the blood bank request with the given id in the database.
@@ -85,7 +84,8 @@ public class BloodBankController {
      * @see "/api/{api_version}/bloodBank PUT"
      */
     @PutMapping("")
-    public StatusResponse updateBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
+    public StatusResponse updateBloodBank(@RequestBody BloodBankRequest bloodBankRequest,
+            HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.updateBloodBank(bloodBankRequest.getBloodBank());
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
@@ -97,7 +97,6 @@ public class BloodBankController {
         }
         return statusResponse;
     }
-
 
     /**
      * PUT method.

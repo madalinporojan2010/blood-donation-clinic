@@ -6,7 +6,6 @@ import application.repository.BloodBankRepository;
 import application.utils.ResponseMessage;
 import org.springframework.stereotype.*;
 
-
 import java.util.List;
 
 /**
@@ -20,7 +19,6 @@ public class BloodBankService {
     public BloodBankService(BloodBankRepository bloodBankRepository) {
         this.bloodBankRepository = bloodBankRepository;
     }
-
 
     /**
      * Fetches all the entries from the blood bank table.
@@ -36,7 +34,6 @@ public class BloodBankService {
         }
         return fetchedBloodBank;
     }
-
 
     /**
      * Saves a blood bank request to blood bank table.

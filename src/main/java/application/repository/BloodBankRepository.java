@@ -33,7 +33,6 @@ public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
     @Query(value = "SELECT b.blood_type_id FROM blood_clinic.blood_bank b WHERE b.blood_type_id = :bloodTypeId", nativeQuery = true)
     Long findBloodBankByBloodTypeId(@Param("bloodTypeId") Long bloodTypeId);
 
-
     /**
      * Inserts a blood bank entry into the database.
      *
@@ -65,6 +64,5 @@ public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
     @Modifying
     @Query(value = "DELETE FROM blood_clinic.blood_bank b WHERE b.id = :bloodBankId", nativeQuery = true)
     void deleteBloodBank(@Param("bloodBankId") Long bloodBankId);
-
 
 }

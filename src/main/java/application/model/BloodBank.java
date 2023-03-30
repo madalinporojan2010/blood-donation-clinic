@@ -2,7 +2,6 @@ package application.model;
 
 import javax.persistence.*;
 
-
 /**
  * Class used for the blood_bank table entity.
  */

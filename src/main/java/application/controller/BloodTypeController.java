@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Class used for the blood type table controller, which manages the requests taken from the endpoint.
+ * Class used for the blood type table controller, which manages the requests
+ * taken from the endpoint.
  * Usual POST, PUT, GET, DELETE methods.
  *
  * @see /api/{api_version}/bloodType
@@ -52,7 +53,6 @@ public class BloodTypeController {
         return fetchBloodTypeResponse;
     }
 
-
     /**
      * POST method.
      * Saves the blood type request in the database.
@@ -74,7 +74,6 @@ public class BloodTypeController {
         return statusResponse;
     }
 
-
     /**
      * PUT method.
      * Updates the blood type request with the given id in the database.
@@ -85,7 +84,8 @@ public class BloodTypeController {
      * @see "/api/{api_version}/bloodType PUT"
      */
     @PutMapping("")
-    public StatusResponse updateBloodType(@RequestBody BloodTypeRequest bloodTypeRequest, HttpServletResponse response) {
+    public StatusResponse updateBloodType(@RequestBody BloodTypeRequest bloodTypeRequest,
+            HttpServletResponse response) {
         StatusResponse statusResponse = bloodTypeService.updateBloodType(bloodTypeRequest.getBloodType());
 
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
@@ -97,7 +97,6 @@ public class BloodTypeController {
         }
         return statusResponse;
     }
-
 
     /**
      * PUT method.

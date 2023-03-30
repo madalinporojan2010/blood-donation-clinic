@@ -21,7 +21,6 @@ public class BloodTypeService {
         this.bloodTypeRepository = bloodTypeRepository;
     }
 
-
     /**
      * Fetches all the entries from the bloodType table.
      *
@@ -36,7 +35,6 @@ public class BloodTypeService {
         }
         return fetchedBloodType;
     }
-
 
     /**
      * Saves a bloodType request to bloodType table.

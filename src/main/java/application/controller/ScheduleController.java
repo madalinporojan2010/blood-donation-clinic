@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Class used for the schedule table controller, which manages the requests taken from the endpoint.
+ * Class used for the schedule table controller, which manages the requests
+ * taken from the endpoint.
  * Usual POST, PUT, GET, DELETE methods.
  *
  * @see /api/{api_version}/schedule
@@ -52,7 +53,6 @@ public class ScheduleController {
         return fetchScheduleResponse;
     }
 
-
     /**
      * POST method.
      * Saves the schedule request in the database.
@@ -73,7 +73,6 @@ public class ScheduleController {
         }
         return statusResponse;
     }
-
 
     /**
      * PUT method.
@@ -97,7 +96,6 @@ public class ScheduleController {
         }
         return statusResponse;
     }
-
 
     /**
      * PUT method.

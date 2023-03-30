@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Class used for the main functionalities of the application, e.g. health check.
+ * Class used for the main functionalities of the application, e.g. health
+ * check.
  * Usual POST, PUT, GET, DELETE methods.
  *
  * @see /api/{api_version}/
