@@ -5,6 +5,7 @@ import application.model.request.BloodBankRequest;
 import application.model.response.FetchBloodBankResponse;
 import application.model.response.StatusResponse;
 import application.service.BloodBankService;
+import application.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +66,7 @@ public class BloodBankController {
     public StatusResponse saveBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.saveBloodBank(bloodBankRequest.getBloodBank());
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -87,9 +88,9 @@ public class BloodBankController {
     public StatusResponse updateBloodBank(@RequestBody BloodBankRequest bloodBankRequest, HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.updateBloodBank(bloodBankRequest.getBloodBank());
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } else if (statusResponse.getMessage().toLowerCase().contains("id not present")) {
+        } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -111,8 +112,10 @@ public class BloodBankController {
     public StatusResponse deleteBloodBank(@PathVariable Long bloodBankId, HttpServletResponse response) {
         StatusResponse statusResponse = bloodBankService.deleteBloodBank(bloodBankId);
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
+        } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

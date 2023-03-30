@@ -5,6 +5,7 @@ import application.model.request.BloodTypeRequest;
 import application.model.response.FetchBloodTypesResponse;
 import application.model.response.StatusResponse;
 import application.service.BloodTypeService;
+import application.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +66,7 @@ public class BloodTypeController {
     public StatusResponse saveBloodType(@RequestBody BloodTypeRequest bloodTypeRequest, HttpServletResponse response) {
         StatusResponse statusResponse = bloodTypeService.saveBloodType(bloodTypeRequest.getBloodType());
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -87,9 +88,9 @@ public class BloodTypeController {
     public StatusResponse updateBloodType(@RequestBody BloodTypeRequest bloodTypeRequest, HttpServletResponse response) {
         StatusResponse statusResponse = bloodTypeService.updateBloodType(bloodTypeRequest.getBloodType());
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } else if (statusResponse.getMessage().toLowerCase().contains("id not present")) {
+        } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -111,8 +112,10 @@ public class BloodTypeController {
     public StatusResponse deleteBloodType(@PathVariable Long bloodTypeId, HttpServletResponse response) {
         StatusResponse statusResponse = bloodTypeService.deleteBloodType(bloodTypeId);
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
+        } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

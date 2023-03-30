@@ -3,6 +3,7 @@ package application.service;
 import application.model.BloodBank;
 import application.model.response.StatusResponse;
 import application.repository.BloodBankRepository;
+import application.utils.ResponseMessage;
 import org.springframework.stereotype.*;
 
 
@@ -31,7 +32,7 @@ public class BloodBankService {
         try {
             fetchedBloodBank = bloodBankRepository.findAllBloodBank();
         } catch (Exception e) {
-            System.out.println("[BloodBankService/getBloodBank] error: " + e);
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
         }
         return fetchedBloodBank;
     }
@@ -47,10 +48,10 @@ public class BloodBankService {
         StatusResponse statusResponse = new StatusResponse();
         try {
             bloodBankRepository.save(bloodBank);
-            statusResponse.setMessage("success");
+            statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
-            System.out.println("[BloodBankService/saveBloodBank] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
@@ -66,13 +67,13 @@ public class BloodBankService {
         try {
             if (bloodBankRepository.existsById(bloodBank.getId())) {
                 bloodBankRepository.save(bloodBank);
-                statusResponse.setMessage("success");
+                statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
-                statusResponse.setMessage("error: entry with the given id not present");
+                statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            System.out.println("[BloodBankService/updateBloodBank] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
@@ -88,13 +89,13 @@ public class BloodBankService {
         try {
             if (bloodBankRepository.existsById(bloodBankId)) {
                 bloodBankRepository.deleteById(bloodBankId);
-                statusResponse.setMessage("success");
+                statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
-                statusResponse.setMessage("error");
+                statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            System.out.println("[BloodBankService/deleteBloodBank] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }

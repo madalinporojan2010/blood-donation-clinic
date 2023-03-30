@@ -3,10 +3,15 @@ package application.service;
 import application.model.BloodType;
 import application.model.response.StatusResponse;
 import application.repository.BloodTypeRepository;
+import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class used for the blood type table.
+ * Usual calls to the Repository Class, fetching database table data.
+ */
 @Service
 public class BloodTypeService {
 
@@ -27,7 +32,7 @@ public class BloodTypeService {
         try {
             fetchedBloodType = bloodTypeRepository.findAll();
         } catch (Exception e) {
-            System.out.println("[BloodTypeService/findAllBloodTypes] error: " + e);
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
         }
         return fetchedBloodType;
     }
@@ -43,10 +48,10 @@ public class BloodTypeService {
         StatusResponse statusResponse = new StatusResponse();
         try {
             bloodTypeRepository.save(bloodType);
-            statusResponse.setMessage("success");
+            statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
-            System.out.println("[BloodTypeService/saveBloodType] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
@@ -62,13 +67,13 @@ public class BloodTypeService {
         try {
             if (bloodTypeRepository.existsById(bloodType.getId())) {
                 bloodTypeRepository.save(bloodType);
-                statusResponse.setMessage("success");
+                statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
-                statusResponse.setMessage("error: entry with the given id not present");
+                statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            System.out.println("[BloodTypeService/updateBloodType] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
@@ -84,13 +89,13 @@ public class BloodTypeService {
         try {
             if (bloodTypeRepository.existsById(bloodTypeId)) {
                 bloodTypeRepository.deleteById(bloodTypeId);
-                statusResponse.setMessage("success");
+                statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
-                statusResponse.setMessage("error");
+                statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            System.out.println("[BloodTypeService/deleteBloodType] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }

@@ -5,6 +5,7 @@ import application.model.request.ScheduleRequest;
 import application.model.response.FetchSchedulesResponse;
 import application.model.response.StatusResponse;
 import application.service.ScheduleService;
+import application.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +66,7 @@ public class ScheduleController {
     public StatusResponse saveSchedule(@RequestBody ScheduleRequest scheduleRequest, HttpServletResponse response) {
         StatusResponse statusResponse = scheduleService.saveSchedule(scheduleRequest.getSchedule());
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -87,9 +88,9 @@ public class ScheduleController {
     public StatusResponse updateSchedule(@RequestBody ScheduleRequest scheduleRequest, HttpServletResponse response) {
         StatusResponse statusResponse = scheduleService.updateSchedule(scheduleRequest.getSchedule());
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } else if (statusResponse.getMessage().toLowerCase().contains("id not present")) {
+        } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -111,8 +112,10 @@ public class ScheduleController {
     public StatusResponse deleteSchedule(@PathVariable Long scheduleId, HttpServletResponse response) {
         StatusResponse statusResponse = scheduleService.deleteSchedule(scheduleId);
 
-        if (statusResponse.getMessage().toLowerCase().contains("success")) {
+        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
             response.setStatus(HttpServletResponse.SC_OK);
+        } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

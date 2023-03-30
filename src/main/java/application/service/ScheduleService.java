@@ -3,10 +3,15 @@ package application.service;
 import application.model.Schedule;
 import application.model.response.StatusResponse;
 import application.repository.ScheduleRepository;
+import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class used for the schedule table.
+ * Usual calls to the Repository Class, fetching database table data.
+ */
 @Service
 public class ScheduleService {
 
@@ -27,7 +32,7 @@ public class ScheduleService {
         try {
             fetchedSchedule = scheduleRepository.findAll();
         } catch (Exception e) {
-            System.out.println("[ScheduleService/findAllSchedules] error: " + e);
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
         }
         return fetchedSchedule;
     }
@@ -43,10 +48,10 @@ public class ScheduleService {
         StatusResponse statusResponse = new StatusResponse();
         try {
             scheduleRepository.save(schedule);
-            statusResponse.setMessage("success");
+            statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
-            System.out.println("[ScheduleService/saveSchedule] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
@@ -62,13 +67,13 @@ public class ScheduleService {
         try {
             if (scheduleRepository.existsById(schedule.getId())) {
                 scheduleRepository.save(schedule);
-                statusResponse.setMessage("success");
+                statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
-                statusResponse.setMessage("error: entry with the given id not present");
+                statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            System.out.println("[ScheduleService/updateSchedule] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
@@ -84,13 +89,13 @@ public class ScheduleService {
         try {
             if (scheduleRepository.existsById(scheduleId)) {
                 scheduleRepository.deleteById(scheduleId);
-                statusResponse.setMessage("success");
+                statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
-                statusResponse.setMessage("error");
+                statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            System.out.println("[ScheduleService/deleteSchedule] error: " + e);
-            statusResponse.setMessage("error");
+            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
     }
