@@ -6,9 +6,11 @@ import application.model.response.FetchDonationsResponse;
 import application.model.response.StatusResponse;
 import application.service.DonationService;
 import application.utils.ResponseMessage;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -36,21 +38,23 @@ public class DonationController {
      * @see "/api/{api_version}/donation GET"
      */
     @GetMapping("")
-    public FetchDonationsResponse findAllDonations(HttpServletResponse response) {
+    public ResponseEntity<FetchDonationsResponse> findAllDonations() {
         List<Donation> fetchedDonations = donationService.findAllDonations();
         FetchDonationsResponse fetchDonationResponse = new FetchDonationsResponse();
+
+        HttpStatus httpStatus = HttpStatus.OK;
 
         if (fetchedDonations != null) {
             fetchDonationResponse.setFetchedDonations(fetchedDonations);
             if (fetchedDonations.size() == 0) {
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                httpStatus = HttpStatus.NO_CONTENT;
             } else {
-                response.setStatus(HttpServletResponse.SC_OK);
+                httpStatus = HttpStatus.OK;
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return fetchDonationResponse;
+        return new ResponseEntity<>(fetchDonationResponse, httpStatus);
     }
 
     /**
@@ -63,16 +67,17 @@ public class DonationController {
      * @see "/api/{api_version}/donation POST"
      */
     @PostMapping("")
-    public StatusResponse saveDonation(@RequestBody DonationRequest donationRequest,
-            HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> saveDonation(@RequestBody DonationRequest donationRequest) {
         StatusResponse statusResponse = donationService.saveDonation(donationRequest.getDonation());
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 
     /**
@@ -85,18 +90,19 @@ public class DonationController {
      * @see "/api/{api_version}/donation PUT"
      */
     @PutMapping("")
-    public StatusResponse updateDonation(@RequestBody DonationRequest donationRequest,
-            HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> updateDonation(@RequestBody DonationRequest donationRequest) {
         StatusResponse statusResponse = donationService.updateDonation(donationRequest.getDonation());
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpStatus = HttpStatus.BAD_REQUEST;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 
     /**
@@ -109,16 +115,18 @@ public class DonationController {
      * @see "/api/{api_version}/donation/{donationId} DELETE"
      */
     @DeleteMapping("/{donationId}")
-    public StatusResponse deleteDonation(@PathVariable Long donationId, HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> deleteDonation(@PathVariable Long donationId) {
         StatusResponse statusResponse = donationService.deleteDonation(donationId);
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpStatus = HttpStatus.BAD_REQUEST;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 }

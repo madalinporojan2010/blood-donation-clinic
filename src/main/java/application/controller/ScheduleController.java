@@ -6,9 +6,11 @@ import application.model.response.FetchSchedulesResponse;
 import application.model.response.StatusResponse;
 import application.service.ScheduleService;
 import application.utils.ResponseMessage;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -36,21 +38,23 @@ public class ScheduleController {
      * @see "/api/{api_version}/schedule GET"
      */
     @GetMapping("")
-    public FetchSchedulesResponse findAllSchedules(HttpServletResponse response) {
+    public ResponseEntity<FetchSchedulesResponse> findAllSchedules() {
         List<Schedule> fetchedSchedule = scheduleService.findAllSchedules();
         FetchSchedulesResponse fetchScheduleResponse = new FetchSchedulesResponse();
+
+        HttpStatus httpStatus = HttpStatus.OK;
 
         if (fetchedSchedule != null) {
             fetchScheduleResponse.setFetchedSchedules(fetchedSchedule);
             if (fetchedSchedule.size() == 0) {
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                httpStatus = HttpStatus.NO_CONTENT;
             } else {
-                response.setStatus(HttpServletResponse.SC_OK);
+                httpStatus = HttpStatus.OK;
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return fetchScheduleResponse;
+        return new ResponseEntity<>(fetchScheduleResponse, httpStatus);
     }
 
     /**
@@ -63,15 +67,17 @@ public class ScheduleController {
      * @see "/api/{api_version}/schedule POST"
      */
     @PostMapping("")
-    public StatusResponse saveSchedule(@RequestBody ScheduleRequest scheduleRequest, HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> saveSchedule(@RequestBody ScheduleRequest scheduleRequest) {
         StatusResponse statusResponse = scheduleService.saveSchedule(scheduleRequest.getSchedule());
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 
     /**
@@ -84,17 +90,19 @@ public class ScheduleController {
      * @see "/api/{api_version}/schedule PUT"
      */
     @PutMapping("")
-    public StatusResponse updateSchedule(@RequestBody ScheduleRequest scheduleRequest, HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> updateSchedule(@RequestBody ScheduleRequest scheduleRequest) {
         StatusResponse statusResponse = scheduleService.updateSchedule(scheduleRequest.getSchedule());
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpStatus = HttpStatus.BAD_REQUEST;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 
     /**
@@ -107,16 +115,18 @@ public class ScheduleController {
      * @see "/api/{api_version}/schedule/{scheduleId} DELETE"
      */
     @DeleteMapping("/{scheduleId}")
-    public StatusResponse deleteSchedule(@PathVariable Long scheduleId, HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> deleteSchedule(@PathVariable Long scheduleId) {
         StatusResponse statusResponse = scheduleService.deleteSchedule(scheduleId);
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpStatus = HttpStatus.BAD_REQUEST;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 }

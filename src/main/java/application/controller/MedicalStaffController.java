@@ -6,9 +6,11 @@ import application.model.response.FetchMedicalStaffsResponse;
 import application.model.response.StatusResponse;
 import application.service.MedicalStaffService;
 import application.utils.ResponseMessage;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -36,21 +38,23 @@ public class MedicalStaffController {
      * @see "/api/{api_version}/medicalStaff GET"
      */
     @GetMapping("")
-    public FetchMedicalStaffsResponse findAllMedicalStaffs(HttpServletResponse response) {
+    public ResponseEntity<FetchMedicalStaffsResponse> findAllMedicalStaffs() {
         List<MedicalStaff> fetchedMedicalStaffs = medicalStaffService.findAllMedicalStaffs();
         FetchMedicalStaffsResponse fetchMedicalStaffResponse = new FetchMedicalStaffsResponse();
+
+        HttpStatus httpStatus = HttpStatus.OK;
 
         if (fetchedMedicalStaffs != null) {
             fetchMedicalStaffResponse.setFetchedMedicalStaffs(fetchedMedicalStaffs);
             if (fetchedMedicalStaffs.size() == 0) {
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                httpStatus = HttpStatus.NO_CONTENT;
             } else {
-                response.setStatus(HttpServletResponse.SC_OK);
+                httpStatus = HttpStatus.OK;
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return fetchMedicalStaffResponse;
+        return new ResponseEntity<>(fetchMedicalStaffResponse, httpStatus);
     }
 
     /**
@@ -63,16 +67,17 @@ public class MedicalStaffController {
      * @see "/api/{api_version}/medicalStaff POST"
      */
     @PostMapping("")
-    public StatusResponse saveMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest,
-            HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> saveMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest) {
         StatusResponse statusResponse = medicalStaffService.saveMedicalStaff(medicalStaffRequest.getMedicalStaff());
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 
     /**
@@ -85,18 +90,19 @@ public class MedicalStaffController {
      * @see "/api/{api_version}/medicalStaff PUT"
      */
     @PutMapping("")
-    public StatusResponse updateMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest,
-            HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> updateMedicalStaff(@RequestBody MedicalStaffRequest medicalStaffRequest) {
         StatusResponse statusResponse = medicalStaffService.updateMedicalStaff(medicalStaffRequest.getMedicalStaff());
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpStatus = HttpStatus.BAD_REQUEST;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 
     /**
@@ -109,16 +115,18 @@ public class MedicalStaffController {
      * @see "/api/{api_version}/medicalStaff/{medicalStaffId} DELETE"
      */
     @DeleteMapping("/{medicalStaffId}")
-    public StatusResponse deleteMedicalStaff(@PathVariable Long medicalStaffId, HttpServletResponse response) {
+    public ResponseEntity<StatusResponse> deleteMedicalStaff(@PathVariable Long medicalStaffId) {
         StatusResponse statusResponse = medicalStaffService.deleteMedicalStaff(medicalStaffId);
 
+        HttpStatus httpStatus = HttpStatus.OK;
+
         if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            httpStatus = HttpStatus.OK;
         } else if (statusResponse.getMessage().equals(ResponseMessage.ERROR_ENTRY_NOT_PRESENT)) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            httpStatus = HttpStatus.BAD_REQUEST;
         } else {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return statusResponse;
+        return new ResponseEntity<>(statusResponse, httpStatus);
     }
 }
