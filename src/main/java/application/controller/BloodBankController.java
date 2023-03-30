@@ -5,7 +5,6 @@ import application.model.request.BloodBankRequest;
 import application.model.response.FetchBloodBankResponse;
 import application.model.response.StatusResponse;
 import application.service.BloodBankService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;

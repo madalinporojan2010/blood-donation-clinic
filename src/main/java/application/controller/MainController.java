@@ -2,8 +2,6 @@ package application.controller;
 
 import application.model.response.StatusResponse;
 import application.service.MainService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;

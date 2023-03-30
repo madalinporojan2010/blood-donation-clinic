@@ -3,11 +3,9 @@ package application.service;
 import application.model.Schedule;
 import application.model.response.StatusResponse;
 import application.repository.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScheduleService {
@@ -48,7 +46,7 @@ public class ScheduleService {
                 scheduleRepository.save(schedule);
                 statusResponse.setMessage("success");
             } else {
-                statusResponse.setMessage("error: entry with the given id is already present");
+                statusResponse.setMessage("error: entry with the given id already present");
             }
         } catch (Exception e) {
             System.out.println("[ScheduleService/saveSchedule] error: " + e);

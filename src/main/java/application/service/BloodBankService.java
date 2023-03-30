@@ -3,7 +3,6 @@ package application.service;
 import application.model.BloodBank;
 import application.model.response.StatusResponse;
 import application.repository.BloodBankRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 
