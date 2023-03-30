@@ -37,8 +37,3 @@ Atat pentru POST cat si pentru PUT, se transmite un request body in format JSON,
 In cazul unui GET, se acceseaza endpoint-ul /api/v1/bloodBank si se transmit toate datele, sub forma de array, din baza de date blood_bank, alaturi de un http code OK/No content/Internal server error.
 
 Pentru DELETE, se transmite la /api/v1/bloodBank/{bloodBankId} id-ul entry-ului din tabela blood_bank care va fii sters. Se transmite inapoi un mesaj de succes alaturi de un http code OK/Internal server error.
-
-![POST](/docs/post.png)
-![PUT](/docs/put.png)
-![GET](/docs/get.png)
-![DELETE](/docs/delete.png)
