@@ -20,8 +20,11 @@ import java.util.List;
 @RequestMapping("/bloodBank")
 @CrossOrigin
 public class BloodBankController {
-    @Autowired
-    private BloodBankService bloodBankService;
+    private final BloodBankService bloodBankService;
+
+    public BloodBankController(BloodBankService bloodBankService) {
+        this.bloodBankService = bloodBankService;
+    }
 
     /**
      * GET method.

@@ -17,8 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/")
 @CrossOrigin
 public class MainController {
-    @Autowired
-    private MainService mainService;
+    private final MainService mainService;
+
+    public MainController(MainService mainService) {
+        this.mainService = mainService;
+    }
 
     /**
      * GET method.

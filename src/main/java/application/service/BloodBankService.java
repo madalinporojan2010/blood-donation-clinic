@@ -15,8 +15,11 @@ import java.util.List;
  * */
 @Service
 public class BloodBankService {
-    @Autowired
-    private BloodBankRepository bloodBankRepository;
+    private final BloodBankRepository bloodBankRepository;
+
+    public BloodBankService(BloodBankRepository bloodBankRepository) {
+        this.bloodBankRepository = bloodBankRepository;
+    }
 
 
     /**
@@ -82,8 +85,12 @@ public class BloodBankService {
     public StatusResponse deleteBloodBank(Long bloodBankId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            bloodBankRepository.deleteBloodBank(bloodBankId);
-            statusResponse.setMessage("success");
+            if(bloodBankRepository.existsById(bloodBankId)) {
+                bloodBankRepository.deleteBloodBank(bloodBankId);
+                statusResponse.setMessage("success");
+            } else {
+                statusResponse.setMessage("error");
+            }
         } catch (Exception e) {
             System.out.println("[BloodBankService/deleteBloodBank] error: " + e);
             statusResponse.setMessage("error");

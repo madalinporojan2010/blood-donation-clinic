@@ -10,7 +10,7 @@ import java.util.Date;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @ManyToOne
     private Patient patient;
@@ -23,11 +23,11 @@ public class Schedule {
 
     private Date arrivalTime;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
