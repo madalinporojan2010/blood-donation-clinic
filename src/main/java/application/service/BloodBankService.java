@@ -46,12 +46,8 @@ public class BloodBankService {
     public StatusResponse saveBloodBank(BloodBank bloodBank) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (!bloodBankRepository.existsById(bloodBank.getId())) {
-                bloodBankRepository.save(bloodBank);
-                statusResponse.setMessage("success");
-            } else {
-                statusResponse.setMessage("error: entry with the given id already present");
-            }
+            bloodBankRepository.save(bloodBank);
+            statusResponse.setMessage("success");
         } catch (Exception e) {
             System.out.println("[BloodBankService/saveBloodBank] error: " + e);
             statusResponse.setMessage("error");

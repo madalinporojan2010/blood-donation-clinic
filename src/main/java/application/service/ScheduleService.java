@@ -42,12 +42,8 @@ public class ScheduleService {
     public StatusResponse saveSchedule(Schedule schedule) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (!scheduleRepository.existsById(schedule.getId())) {
-                scheduleRepository.save(schedule);
-                statusResponse.setMessage("success");
-            } else {
-                statusResponse.setMessage("error: entry with the given id already present");
-            }
+            scheduleRepository.save(schedule);
+            statusResponse.setMessage("success");
         } catch (Exception e) {
             System.out.println("[ScheduleService/saveSchedule] error: " + e);
             statusResponse.setMessage("error");

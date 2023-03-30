@@ -42,12 +42,8 @@ public class BloodTypeService {
     public StatusResponse saveBloodType(BloodType bloodType) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (!bloodTypeRepository.existsById(bloodType.getId())) {
-                bloodTypeRepository.save(bloodType);
-                statusResponse.setMessage("success");
-            } else {
-                statusResponse.setMessage("error: entry with the given id already present");
-            }
+            bloodTypeRepository.save(bloodType);
+            statusResponse.setMessage("success");
         } catch (Exception e) {
             System.out.println("[BloodTypeService/saveBloodType] error: " + e);
             statusResponse.setMessage("error");
