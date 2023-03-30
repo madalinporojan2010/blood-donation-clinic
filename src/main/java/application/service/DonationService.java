@@ -31,7 +31,7 @@ public class DonationService {
         try {
             fetchedDonation = donationRepository.findAll();
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
         return fetchedDonation;
     }
@@ -48,7 +48,7 @@ public class DonationService {
             donationRepository.save(donation);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
             statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
@@ -70,7 +70,7 @@ public class DonationService {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
             statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
@@ -92,7 +92,7 @@ public class DonationService {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
             statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;

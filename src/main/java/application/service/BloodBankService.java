@@ -30,7 +30,7 @@ public class BloodBankService {
         try {
             fetchedBloodBank = bloodBankRepository.findAllBloodBank();
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
         return fetchedBloodBank;
     }
@@ -47,7 +47,7 @@ public class BloodBankService {
             bloodBankRepository.save(bloodBank);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
             statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
@@ -69,7 +69,7 @@ public class BloodBankService {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
             statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;
@@ -91,7 +91,7 @@ public class BloodBankService {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
             }
         } catch (Exception e) {
-            ResponseMessage.printMethodErrorString(this.getClass().getName(), e.getStackTrace()[0].getMethodName(), e);
+            ResponseMessage.printMethodErrorString(this.getClass(), e);
             statusResponse.setMessage(ResponseMessage.ERROR);
         }
         return statusResponse;

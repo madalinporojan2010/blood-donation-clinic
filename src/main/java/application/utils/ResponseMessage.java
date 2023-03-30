@@ -14,11 +14,14 @@ public class ResponseMessage {
     /**
      * Prints the error location of the service errors.
      *
+     * @param <T>        Type parameter for printing method
      * @param className  Current class name
      * @param methodName Current method name
      * @param exception  The given exception
      */
-    public static void printMethodErrorString(String className, String methodName, Exception exception) {
-        System.out.println("[" + className + "/" + methodName + "] error: " + exception);
+    public static <T> void printMethodErrorString(Class<T> currentClass, Exception exception) {
+        System.out.println(
+                "[" + currentClass.getName() + "/" + exception.getStackTrace()[0].getMethodName() + "] error: "
+                        + exception);
     }
 }
