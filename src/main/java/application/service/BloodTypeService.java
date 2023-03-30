@@ -1,50 +1,51 @@
 package application.service;
 
-import application.model.BloodBank;
+import application.model.BloodType;
 import application.model.response.StatusResponse;
-import application.repository.BloodBankRepository;
+import application.repository.BloodTypeRepository;
 import application.utils.ResponseMessage;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Service class used for the blood bank table.
+ * Service class used for the blood type table.
  * Usual calls to the Repository Class, fetching database table data.
  */
 @Service
-public class BloodBankService {
-    private final BloodBankRepository bloodBankRepository;
+public class BloodTypeService {
 
-    public BloodBankService(BloodBankRepository bloodBankRepository) {
-        this.bloodBankRepository = bloodBankRepository;
+    private final BloodTypeRepository bloodTypeRepository;
+
+    public BloodTypeService(BloodTypeRepository bloodTypeRepository) {
+        this.bloodTypeRepository = bloodTypeRepository;
     }
 
     /**
-     * Fetches all the entries from the blood bank table.
+     * Fetches all the entries from the bloodType table.
      *
-     * @return Returns fetched BloodBank entries in a List.
+     * @return Returns fetched BloodTypes entries in a List.
      */
-    public List<BloodBank> findAllBloodBank() {
-        List<BloodBank> fetchedBloodBank = null;
+    public List<BloodType> findAllBloodTypes() {
+        List<BloodType> fetchedBloodType = null;
         try {
-            fetchedBloodBank = bloodBankRepository.findAllBloodBank();
+            fetchedBloodType = bloodTypeRepository.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
-        return fetchedBloodBank;
+        return fetchedBloodType;
     }
 
     /**
-     * Saves a blood bank request to blood bank table.
+     * Saves a bloodType request to bloodType table.
      *
-     * @param bloodBank Given blood bank request body.
+     * @param bloodType Given BloodType request body.
      * @return Success or error message.
      */
-    public StatusResponse saveBloodBank(BloodBank bloodBank) {
+    public StatusResponse saveBloodType(BloodType bloodType) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            bloodBankRepository.save(bloodBank);
+            bloodTypeRepository.save(bloodType);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -54,16 +55,16 @@ public class BloodBankService {
     }
 
     /**
-     * Updates a blood bank entry with the given request body.
+     * Updates a bloodType entry with the given request body.
      *
-     * @param bloodBank Given blood bank request body.
+     * @param bloodType Given bloodType request body.
      * @return Success or error message.
      */
-    public StatusResponse updateBloodBank(BloodBank bloodBank) {
+    public StatusResponse updateBloodType(BloodType bloodType) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodBankRepository.existsById(bloodBank.getId())) {
-                bloodBankRepository.save(bloodBank);
+            if (bloodTypeRepository.existsById(bloodType.getId())) {
+                bloodTypeRepository.save(bloodType);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -76,16 +77,16 @@ public class BloodBankService {
     }
 
     /**
-     * Deletes a blood bank entry with the given id.
+     * Deletes a bloodType entry with the given id.
      *
-     * @param bloodBankId Given blood bank id.
+     * @param bloodTypeId Given bloodType id.
      * @return Success or error message.
      */
-    public StatusResponse deleteBloodBank(Long bloodBankId) {
+    public StatusResponse deleteBloodType(Long bloodTypeId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodBankRepository.existsById(bloodBankId)) {
-                bloodBankRepository.deleteById(bloodBankId);
+            if (bloodTypeRepository.existsById(bloodTypeId)) {
+                bloodTypeRepository.deleteById(bloodTypeId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

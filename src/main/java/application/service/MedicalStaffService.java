@@ -1,50 +1,51 @@
 package application.service;
 
-import application.model.BloodBank;
+import application.model.MedicalStaff;
 import application.model.response.StatusResponse;
-import application.repository.BloodBankRepository;
+import application.repository.MedicalStaffRepository;
 import application.utils.ResponseMessage;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Service class used for the blood bank table.
+ * Service class used for the medical staff table.
  * Usual calls to the Repository Class, fetching database table data.
  */
 @Service
-public class BloodBankService {
-    private final BloodBankRepository bloodBankRepository;
+public class MedicalStaffService {
 
-    public BloodBankService(BloodBankRepository bloodBankRepository) {
-        this.bloodBankRepository = bloodBankRepository;
+    private final MedicalStaffRepository medicalStaffRepository;
+
+    public MedicalStaffService(MedicalStaffRepository medicalStaffRepository) {
+        this.medicalStaffRepository = medicalStaffRepository;
     }
 
     /**
-     * Fetches all the entries from the blood bank table.
+     * Fetches all the entries from the medicalStaff table.
      *
-     * @return Returns fetched BloodBank entries in a List.
+     * @return Returns fetched MedicalStaffs entries in a List.
      */
-    public List<BloodBank> findAllBloodBank() {
-        List<BloodBank> fetchedBloodBank = null;
+    public List<MedicalStaff> findAllMedicalStaffs() {
+        List<MedicalStaff> fetchedMedicalStaff = null;
         try {
-            fetchedBloodBank = bloodBankRepository.findAllBloodBank();
+            fetchedMedicalStaff = medicalStaffRepository.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
-        return fetchedBloodBank;
+        return fetchedMedicalStaff;
     }
 
     /**
-     * Saves a blood bank request to blood bank table.
+     * Saves a medicalStaff request to medicalStaff table.
      *
-     * @param bloodBank Given blood bank request body.
+     * @param medicalStaff Given MedicalStaff request body.
      * @return Success or error message.
      */
-    public StatusResponse saveBloodBank(BloodBank bloodBank) {
+    public StatusResponse saveMedicalStaff(MedicalStaff medicalStaff) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            bloodBankRepository.save(bloodBank);
+            medicalStaffRepository.save(medicalStaff);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -54,16 +55,16 @@ public class BloodBankService {
     }
 
     /**
-     * Updates a blood bank entry with the given request body.
+     * Updates a medicalStaff entry with the given request body.
      *
-     * @param bloodBank Given blood bank request body.
+     * @param medicalStaff Given medicalStaff request body.
      * @return Success or error message.
      */
-    public StatusResponse updateBloodBank(BloodBank bloodBank) {
+    public StatusResponse updateMedicalStaff(MedicalStaff medicalStaff) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodBankRepository.existsById(bloodBank.getId())) {
-                bloodBankRepository.save(bloodBank);
+            if (medicalStaffRepository.existsById(medicalStaff.getId())) {
+                medicalStaffRepository.save(medicalStaff);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -76,16 +77,16 @@ public class BloodBankService {
     }
 
     /**
-     * Deletes a blood bank entry with the given id.
+     * Deletes a medicalStaff entry with the given id.
      *
-     * @param bloodBankId Given blood bank id.
+     * @param medicalStaffId Given medicalStaff id.
      * @return Success or error message.
      */
-    public StatusResponse deleteBloodBank(Long bloodBankId) {
+    public StatusResponse deleteMedicalStaff(Long medicalStaffId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodBankRepository.existsById(bloodBankId)) {
-                bloodBankRepository.deleteById(bloodBankId);
+            if (medicalStaffRepository.existsById(medicalStaffId)) {
+                medicalStaffRepository.deleteById(medicalStaffId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

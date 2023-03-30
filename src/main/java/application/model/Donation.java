@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * Class used for the donation table entity.
- * */
+ */
 @Entity
 public class Donation {
     @Id

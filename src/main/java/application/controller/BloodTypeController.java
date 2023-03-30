@@ -1,10 +1,10 @@
 package application.controller;
 
-import application.model.BloodBank;
-import application.model.request.BloodBankRequest;
-import application.model.response.FetchBloodBankResponse;
+import application.model.BloodType;
+import application.model.request.BloodTypeRequest;
+import application.model.response.FetchBloodTypesResponse;
 import application.model.response.StatusResponse;
-import application.service.BloodBankService;
+import application.service.BloodTypeService;
 import application.utils.ResponseMessage;
 
 import org.springframework.http.HttpStatus;
@@ -14,39 +14,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Class used for the blood bank table controller, which manages the requests
+ * Class used for the blood type table controller, which manages the requests
  * taken from the endpoint.
  * Usual POST, PUT, GET, DELETE methods.
  *
- * @see /api/{api_version}/bloodBank
+ * @see /api/{api_version}/bloodType
  */
 @RestController
-@RequestMapping("/bloodBank")
+@RequestMapping("/bloodType")
 @CrossOrigin
-public class BloodBankController {
-    private final BloodBankService bloodBankService;
+public class BloodTypeController {
+    private final BloodTypeService bloodTypeService;
 
-    public BloodBankController(BloodBankService bloodBankService) {
-        this.bloodBankService = bloodBankService;
+    public BloodTypeController(BloodTypeService bloodTypeService) {
+        this.bloodTypeService = bloodTypeService;
     }
 
     /**
      * GET method.
      *
      * @param response Returned status
-     * @return Returns all the entries from the blood bank table.
-     * @see "/api/{api_version}/bloodBank GET"
+     * @return Returns all the entries from the blood type table.
+     * @see "/api/{api_version}/bloodType GET"
      */
     @GetMapping("")
-    public ResponseEntity<FetchBloodBankResponse> findAllBloodBank() {
-        List<BloodBank> fetchedBloodBank = bloodBankService.findAllBloodBank();
-        FetchBloodBankResponse fetchBloodBankResponse = new FetchBloodBankResponse();
+    public ResponseEntity<FetchBloodTypesResponse> findAllBloodTypes() {
+        List<BloodType> fetchedBloodTypes = bloodTypeService.findAllBloodTypes();
+        FetchBloodTypesResponse fetchBloodTypeResponse = new FetchBloodTypesResponse();
 
         HttpStatus httpStatus = HttpStatus.OK;
 
-        if (fetchedBloodBank != null) {
-            fetchBloodBankResponse.setFetchedBloodBank(fetchedBloodBank);
-            if (fetchedBloodBank.size() == 0) {
+        if (fetchedBloodTypes != null) {
+            fetchBloodTypeResponse.setFetchedBloodTypes(fetchedBloodTypes);
+            if (fetchedBloodTypes.size() == 0) {
                 httpStatus = HttpStatus.NO_CONTENT;
             } else {
                 httpStatus = HttpStatus.OK;
@@ -54,21 +54,21 @@ public class BloodBankController {
         } else {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<>(fetchBloodBankResponse, httpStatus);
+        return new ResponseEntity<>(fetchBloodTypeResponse, httpStatus);
     }
 
     /**
      * POST method.
-     * Saves the blood bank request in the database.
+     * Saves the blood type request in the database.
      *
      * @param response         Returned status.
-     * @param bloodBankRequest Bound request from user endpoint access.
+     * @param bloodTypeRequest Bound request from user endpoint access.
      * @return Returns a Success or Error message.
-     * @see "/api/{api_version}/bloodBank POST"
+     * @see "/api/{api_version}/bloodType POST"
      */
     @PostMapping("")
-    public ResponseEntity<StatusResponse> saveBloodBank(@RequestBody BloodBankRequest bloodBankRequest) {
-        StatusResponse statusResponse = bloodBankService.saveBloodBank(bloodBankRequest.getBloodBank());
+    public ResponseEntity<StatusResponse> saveBloodType(@RequestBody BloodTypeRequest bloodTypeRequest) {
+        StatusResponse statusResponse = bloodTypeService.saveBloodType(bloodTypeRequest.getBloodType());
 
         HttpStatus httpStatus = HttpStatus.OK;
 
@@ -82,16 +82,16 @@ public class BloodBankController {
 
     /**
      * PUT method.
-     * Updates the blood bank request with the given id in the database.
+     * Updates the blood type request with the given id in the database.
      *
      * @param response         Returned status.
-     * @param bloodBankRequest Bound request from user endpoint access.
+     * @param bloodTypeRequest Bound request from user endpoint access.
      * @return Returns a Success or Error message.
-     * @see "/api/{api_version}/bloodBank PUT"
+     * @see "/api/{api_version}/bloodType PUT"
      */
     @PutMapping("")
-    public ResponseEntity<StatusResponse> updateBloodBank(@RequestBody BloodBankRequest bloodBankRequest) {
-        StatusResponse statusResponse = bloodBankService.updateBloodBank(bloodBankRequest.getBloodBank());
+    public ResponseEntity<StatusResponse> updateBloodType(@RequestBody BloodTypeRequest bloodTypeRequest) {
+        StatusResponse statusResponse = bloodTypeService.updateBloodType(bloodTypeRequest.getBloodType());
 
         HttpStatus httpStatus = HttpStatus.OK;
 
@@ -107,16 +107,16 @@ public class BloodBankController {
 
     /**
      * PUT method.
-     * Deletes a blood bank entry from the database, with the given id.
+     * Deletes a blood type entry from the database, with the given id.
      *
      * @param response    Returned status.
-     * @param bloodBankId Blood bank id from the user endpoint access.
+     * @param bloodTypeId Blood type id from the user endpoint access.
      * @return Returns a Success or Error message.
-     * @see "/api/{api_version}/bloodBank/{bloodBankId} DELETE"
+     * @see "/api/{api_version}/bloodType/{bloodTypeId} DELETE"
      */
-    @DeleteMapping("/{bloodBankId}")
-    public ResponseEntity<StatusResponse> deleteBloodBank(@PathVariable Long bloodBankId) {
-        StatusResponse statusResponse = bloodBankService.deleteBloodBank(bloodBankId);
+    @DeleteMapping("/{bloodTypeId}")
+    public ResponseEntity<StatusResponse> deleteBloodType(@PathVariable Long bloodTypeId) {
+        StatusResponse statusResponse = bloodTypeService.deleteBloodType(bloodTypeId);
 
         HttpStatus httpStatus = HttpStatus.OK;
 

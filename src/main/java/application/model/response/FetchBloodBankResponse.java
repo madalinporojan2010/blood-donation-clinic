@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Class used for the blood bank endpoint response.
- * */
+ */
 public class FetchBloodBankResponse {
     private List<BloodBank> fetchedBloodBank;
 
