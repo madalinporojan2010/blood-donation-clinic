@@ -67,7 +67,7 @@ public class ScheduleController {
 
         if (statusResponse.getMessage().toLowerCase().contains("success")) {
             response.setStatus(HttpServletResponse.SC_OK);
-        } else if (statusResponse.getMessage().toLowerCase().contains("id already present")) {
+        } else if (statusResponse.getMessage().toLowerCase().contains("present")) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
