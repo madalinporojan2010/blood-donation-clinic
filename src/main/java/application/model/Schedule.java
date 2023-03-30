@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * Class used for the schedule table entity.
- * */
+ */
 @Entity
 public class Schedule {
     @Id

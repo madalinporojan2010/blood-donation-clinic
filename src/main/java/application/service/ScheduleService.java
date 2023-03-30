@@ -44,8 +44,12 @@ public class ScheduleService {
     public StatusResponse saveSchedule(Schedule schedule) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            scheduleRepository.save(schedule);
-            statusResponse.setMessage("success");
+            if (!scheduleRepository.existsById(schedule.getId())) {
+                scheduleRepository.save(schedule);
+                statusResponse.setMessage("success");
+            } else {
+                statusResponse.setMessage("error: entry with the given id is already present");
+            }
         } catch (Exception e) {
             System.out.println("[ScheduleService/saveSchedule] error: " + e);
             statusResponse.setMessage("error");
@@ -62,25 +66,14 @@ public class ScheduleService {
     public StatusResponse updateSchedule(Schedule schedule) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            Optional<Schedule> entryToBeUpdatedOptional = scheduleRepository.findById(schedule.getId());
-            if (entryToBeUpdatedOptional.isPresent()) {
-                Schedule entryToBeUpdated = entryToBeUpdatedOptional.get();
-                if (schedule.getBloodType() != null)
-                    entryToBeUpdated.setBloodType(schedule.getBloodType());
-                if (schedule.getArrivalTime() != null)
-                    entryToBeUpdated.setArrivalTime(schedule.getArrivalTime());
-                if (schedule.getPatient() != null)
-                    entryToBeUpdated.setPatient(schedule.getPatient());
-                if (schedule.getMedicalStaff() != null)
-                    entryToBeUpdated.setMedicalStaff(schedule.getMedicalStaff());
-                scheduleRepository.save(entryToBeUpdated);
-
+            if (scheduleRepository.existsById(schedule.getId())) {
+                scheduleRepository.save(schedule);
                 statusResponse.setMessage("success");
             } else {
-                statusResponse.setMessage("entry with the given id not present");
+                statusResponse.setMessage("error: entry with the given id not present");
             }
         } catch (Exception e) {
-            System.out.println("[ServiceSchedule/updateSchedule] error: " + e);
+            System.out.println("[ScheduleService/updateSchedule] error: " + e);
             statusResponse.setMessage("error");
         }
         return statusResponse;

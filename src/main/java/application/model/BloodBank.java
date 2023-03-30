@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 /**
  * Class used for the blood_bank table entity.
- * */
+ */
 @Entity
 public class BloodBank {
     @Id

@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Class used for the main functionalities of the application, e.g. health check.
  * Usual POST, PUT, GET, DELETE methods.
+ *
  * @see /api/{api_version}/
- * */
+ */
 @RestController
 @RequestMapping("/")
 @CrossOrigin
@@ -25,10 +26,11 @@ public class MainController {
 
     /**
      * GET method.
+     *
      * @param response Returned status
      * @return Returns all the entries from the blood bank table.
      * @see "/api/{api_version}/health GET"
-     * */
+     */
     @GetMapping("/health")
     public StatusResponse checkApplicationHealth(HttpServletResponse response) {
         StatusResponse statusResponse = mainService.checkApplicationHealth();
