@@ -10,6 +10,7 @@ import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service class used for the blood type table.
@@ -55,7 +56,7 @@ public class PatientService {
         StatusResponse statusResponse = new StatusResponse();
         try {
 
-            patientObservable.setPatient(patient);
+            patientObservable.addPatient(patient);
 
             patientRepository.save(patient);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
@@ -76,11 +77,21 @@ public class PatientService {
         StatusResponse statusResponse = new StatusResponse();
         try {
             if (patientRepository.existsById(patient.getId())) {
-                if (patient.getBloodType() != null && this.patientObservable.getPatient() != null
-                        && patient.getId().equals(this.patientObservable.getPatient().getId())) {
-                    Patient newPatient = this.patientObservable.getPatient();
-                    newPatient.setBloodType(patient.getBloodType());
-                    this.patientObserver.update(this.patientObservable, newPatient);
+                if (patient.getBloodType() != null && this.patientObservable.getPatients() != null) {
+
+                    Optional<Patient> newPatientOptional = this.patientObservable.getPatients().stream()
+                            .filter(p -> p.getId().equals(patient.getId())).findAny();
+                    if (newPatientOptional.isPresent()) {
+                        Patient newPatient = newPatientOptional.get();
+                        newPatient.setBloodType(patient.getBloodType());
+
+                        int patientIndex = this.patientObservable.getIndexOfPatient(newPatient);
+                        if (patientIndex != -1) {
+                            this.patientObservable.getPatients().set(patientIndex, newPatient);
+
+                            this.patientObserver.update(this.patientObservable, newPatient);
+                        }
+                    }
                 }
 
                 patientRepository.save(patient);
@@ -105,6 +116,8 @@ public class PatientService {
         StatusResponse statusResponse = new StatusResponse();
         try {
             if (patientRepository.existsById(patientId)) {
+                this.patientObservable.removePatient(patientId);
+
                 patientRepository.deleteById(patientId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
