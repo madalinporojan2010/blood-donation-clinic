@@ -3,6 +3,9 @@ package application.service;
 import application.model.Patient;
 import application.model.response.StatusResponse;
 import application.repository.PatientRepository;
+import application.repository.ScheduleRepository;
+import application.service.observe.PatientObservable;
+import application.service.observe.PatientObserver;
 import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +19,15 @@ import java.util.List;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final PatientObservable patientObservable;
+    private final PatientObserver patientObserver;
 
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, ScheduleRepository scheduleRepository) {
         this.patientRepository = patientRepository;
+
+        this.patientObserver = new PatientObserver(scheduleRepository);
+        this.patientObservable = new PatientObservable();
+        this.patientObservable.addObserver(patientObserver);
     }
 
     /**
@@ -45,6 +54,9 @@ public class PatientService {
     public StatusResponse savePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
+
+            patientObservable.setPatient(patient);
+
             patientRepository.save(patient);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
@@ -64,6 +76,13 @@ public class PatientService {
         StatusResponse statusResponse = new StatusResponse();
         try {
             if (patientRepository.existsById(patient.getId())) {
+                if (patient.getBloodType() != null && this.patientObservable.getPatient() != null
+                        && patient.getId().equals(this.patientObservable.getPatient().getId())) {
+                    Patient newPatient = this.patientObservable.getPatient();
+                    newPatient.setBloodType(patient.getBloodType());
+                    this.patientObserver.update(this.patientObservable, newPatient);
+                }
+
                 patientRepository.save(patient);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {

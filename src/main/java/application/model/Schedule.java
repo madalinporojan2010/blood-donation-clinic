@@ -62,4 +62,14 @@ public class Schedule {
     public void setArrivalTime(Date arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
+
+    public Schedule copy() {
+        Schedule schedule = new Schedule();
+        schedule.setArrivalTime(this.arrivalTime);
+        schedule.setId(this.id);
+        schedule.setMedicalStaff(this.medicalStaff);
+        schedule.setPatient(this.patient);
+        schedule.setBloodType(this.bloodType);
+        return schedule;
+    }
 }
