@@ -18,11 +18,10 @@ public class Patient {
     private String name;
     private String contactPersonPhone;
     private String phone;
+    private String cnp;
 
     @ManyToOne
     private BloodType bloodType;
-
-    private String cnp;
 
     public Long getId() {
         return id;
