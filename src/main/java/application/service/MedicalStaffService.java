@@ -17,6 +17,11 @@ public class MedicalStaffService {
 
     private final MedicalStaffRepository medicalStaffRepository;
 
+    /**
+     * MedicalStaffService constructor used for repositories initialization.
+     * 
+     * @param medicalStaffRepository Schedule table repository
+     */
     public MedicalStaffService(MedicalStaffRepository medicalStaffRepository) {
         this.medicalStaffRepository = medicalStaffRepository;
     }

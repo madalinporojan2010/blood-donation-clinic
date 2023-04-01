@@ -17,6 +17,11 @@ public class DonationService {
 
     private final DonationRepository donationRepository;
 
+    /**
+     * DonationRepository constructor used for repositories initialization.
+     * 
+     * @param donationRepository Schedule table repository
+     */
     public DonationService(DonationRepository donationRepository) {
         this.donationRepository = donationRepository;
     }

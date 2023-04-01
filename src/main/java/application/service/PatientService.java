@@ -23,6 +23,13 @@ public class PatientService {
     private final PatientObservable patientObservable;
     private final PatientObserver patientObserver;
 
+    /**
+     * PatientService constructor used for repositories and observables
+     * initialization.
+     * 
+     * @param patientRepository  Patient table repository
+     * @param scheduleRepository Schedule table repository
+     */
     public PatientService(PatientRepository patientRepository, ScheduleRepository scheduleRepository) {
         this.patientRepository = patientRepository;
 
@@ -47,7 +54,8 @@ public class PatientService {
     }
 
     /**
-     * Saves a patient request to patient table.
+     * Saves a patient request to the patient table. The patient is added in the
+     * observable patients list.
      *
      * @param patient Given Patient request body.
      * @return Success or error message.
@@ -68,7 +76,9 @@ public class PatientService {
     }
 
     /**
-     * Updates a patient entry with the given request body.
+     * Updates a patient entry with the given request body. If the bloodType of the
+     * updated patient is updated also, the observers get notified and the bloodType
+     * column from the Schedule Table is changed.
      *
      * @param patient Given patient request body.
      * @return Success or error message.
@@ -85,7 +95,7 @@ public class PatientService {
                         Patient newPatient = newPatientOptional.get();
                         newPatient.setBloodType(patient.getBloodType());
 
-                        int patientIndex = this.patientObservable.getIndexOfPatient(newPatient);
+                        int patientIndex = this.patientObservable.getIndexOfPatient(newPatient.getId());
                         if (patientIndex != -1) {
                             this.patientObservable.getPatients().set(patientIndex, newPatient);
 
@@ -107,7 +117,8 @@ public class PatientService {
     }
 
     /**
-     * Deletes a patient entry with the given id.
+     * Deletes a patient entry with the given id. The patients is deleted from the
+     * observable patient list also.
      *
      * @param patientId Given patient id.
      * @return Success or error message.

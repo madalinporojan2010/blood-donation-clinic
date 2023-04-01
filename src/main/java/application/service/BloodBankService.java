@@ -16,6 +16,11 @@ import java.util.List;
 public class BloodBankService {
     private final BloodBankRepository bloodBankRepository;
 
+    /**
+     * BloodBankRepository constructor used for repositories initialization.
+     * 
+     * @param bloodBankRepository Schedule table repository
+     */
     public BloodBankService(BloodBankRepository bloodBankRepository) {
         this.bloodBankRepository = bloodBankRepository;
     }

@@ -17,6 +17,11 @@ public class BloodTypeService {
 
     private final BloodTypeRepository bloodTypeRepository;
 
+    /**
+     * BloodTypeRepository constructor used for repositories initialization.
+     * 
+     * @param bloodTypeRepository Schedule table repository
+     */
     public BloodTypeService(BloodTypeRepository bloodTypeRepository) {
         this.bloodTypeRepository = bloodTypeRepository;
     }

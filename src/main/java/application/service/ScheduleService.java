@@ -17,6 +17,11 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
+    /**
+     * ScheduleService constructor used for repositories initialization.
+     * 
+     * @param scheduleRepository Schedule table repository
+     */
     public ScheduleService(ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
