@@ -40,12 +40,12 @@ In cazul unui GET, se acceseaza endpoint-ul /api/v1/bloodBank si se transmit toa
 Pentru DELETE, se transmite la /api/v1/bloodBank/{bloodBankId} id-ul entry-ului din tabela blood_bank care va fii sters. Se transmite inapoi un mesaj de succes alaturi de un http code OK/Internal server error.
 
 > API's:
-> > /api/v1/patients
-> > /api/v1/bloodBank
-> > /api/v1/bloodType
-> > /api/v1/donation
-> > /api/v1/schedule
-> > /api/v1/medicalStaff
+> > - /api/v1/patients
+> > - /api/v1/bloodBank
+> > - /api/v1/bloodType
+> > - /api/v1/donation
+> > - /api/v1/schedule
+> > - /api/v1/medicalStaff
 
 ## Observer design pattern
 Datorita incertitudinii pacientilor, care pot sau nu sa isi cunoasca tipul de sange, programarile lor din schedule table trebuie modificata automat in momentul determinarii tipului de sange de cadrul medical. Solutia pentru aceasta problema este utilizarea unui design pattern Observer, care contine o lista de pacienti (PatientObservable), in care sunt adaugati/scosi pacientii in momentul in care acestia sunt introdusi/scosi si in/din baza de date. 
