@@ -63,8 +63,9 @@ public class PatientService {
     public StatusResponse savePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-
-            patientObservable.addPatient(patient);
+            if (patient.getBloodType().equals(null)) {
+                patientObservable.addPatient(patient);
+            }
 
             patientRepository.save(patient);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
