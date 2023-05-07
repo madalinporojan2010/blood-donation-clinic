@@ -20,6 +20,10 @@ public class PatientObservable extends Observable {
         this.patients = new ArrayList<>();
     }
 
+    public PatientObservable(List<Patient> patients) {
+        this.patients = patients;
+    }
+
     /**
      * Method that adds a patient to the patients list.
      * 
@@ -41,14 +45,16 @@ public class PatientObservable extends Observable {
 
         for (Patient p : patients) {
             index++;
-            if (p.getId().equals(patientId)) {
+            if (p.getId() != null && p.getId().equals(patientId)) {
                 break;
             }
         }
 
-        this.patients.remove(index);
-        setChanged();
-        notifyObservers();
+        if (index >= 0 && index < this.patients.size()) {
+            this.patients.remove(index);
+            setChanged();
+            notifyObservers();
+        }
     }
 
     /**
@@ -61,11 +67,14 @@ public class PatientObservable extends Observable {
         int index = -1;
         for (Patient p : patients) {
             index++;
-            if (p.getId().equals(patientId)) {
+            if (p.getId() != null && p.getId().equals(patientId)) {
                 break;
             }
         }
-        return index;
+        if (index >= 0 && index < this.patients.size()) {
+            return index;
+        }
+        return -1;
     }
 
     public void setPatients(List<Patient> patients) {

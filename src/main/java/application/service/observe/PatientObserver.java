@@ -37,8 +37,7 @@ public class PatientObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Patient patient = (Patient) arg;
-        List<Schedule> foundSchedules = scheduleRepositoryModels.findAllByPatientId(patient.getId());
-        foundSchedules.forEach(schedule -> {
+        scheduleRepositoryModels.findAllByPatientId(patient.getId()).forEach(schedule -> {
             Schedule newSchedule = schedule.copy();
             newSchedule.setBloodType(patient.getBloodType());
             scheduleRepositoryModels.save(newSchedule);
