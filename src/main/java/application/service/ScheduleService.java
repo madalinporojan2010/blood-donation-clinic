@@ -28,6 +28,10 @@ public class ScheduleService {
         this.scheduleRepositoryModels = new ScheduleRepositoryJPA(iScheduleRepository);
     }
 
+    public ScheduleService(ScheduleRepositoryModels scheduleRepositoryModels) {
+        this.scheduleRepositoryModels = scheduleRepositoryModels;
+    }
+
     /**
      * Fetches all the entries from the schedule table.
      *

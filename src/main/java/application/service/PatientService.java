@@ -2,6 +2,7 @@ package application.service;
 
 import application.model.Patient;
 import application.model.repository.PatientRepositoryModels;
+import application.model.repository.ScheduleRepositoryModels;
 import application.model.response.StatusResponse;
 import application.repository.jpa.PatientRepositoryJPA;
 import application.repository.jpa.ScheduleRepositoryJPA;
@@ -38,6 +39,27 @@ public class PatientService {
 
         this.patientObserver = new PatientObserver(new ScheduleRepositoryJPA(iScheduleRepository));
         this.patientObservable = new PatientObservable();
+        this.patientObservable.addObserver(patientObserver);
+    }
+
+    public PatientService(PatientRepositoryModels patientRepositoryModels,
+            ScheduleRepositoryModels scheduleRepositoryModels) {
+        this.patientRepositoryModels = patientRepositoryModels;
+
+        this.patientObserver = new PatientObserver(scheduleRepositoryModels);
+        this.patientObservable = new PatientObservable();
+        this.patientObservable.addObserver(patientObserver);
+    }
+
+    public PatientService(PatientRepositoryModels patientRepositoryModels,
+            ScheduleRepositoryModels scheduleRepositoryModels, PatientObserver patientObserver,
+            PatientObservable patientObservable) {
+        this.patientRepositoryModels = patientRepositoryModels;
+
+        this.patientObserver = patientObserver;
+        this.patientObserver.setScheduleRepositoryModels(scheduleRepositoryModels);
+
+        this.patientObservable = patientObservable;
         this.patientObservable.addObserver(patientObserver);
     }
 

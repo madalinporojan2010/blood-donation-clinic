@@ -42,11 +42,6 @@ public class BloodBankRepositoryJPA implements BloodBankRepositoryModels {
     }
 
     @Override
-    public void deleteBloodBank(Long bloodBankId) {
-        iBloodBankRepository.deleteById(bloodBankId);
-    }
-
-    @Override
     public boolean existsById(Long bloodBankId) {
         return iBloodBankRepository.existsById(bloodBankId);
     }

@@ -28,6 +28,10 @@ public class BloodBankService {
         this.bloodBankRepositoryModels = new BloodBankRepositoryJPA(iBloodBankRepository);
     }
 
+    public BloodBankService(BloodBankRepositoryModels bloodBankRepositoryModels) {
+        this.bloodBankRepositoryModels = bloodBankRepositoryModels;
+    }
+
     /**
      * Fetches all the entries from the blood bank table.
      *

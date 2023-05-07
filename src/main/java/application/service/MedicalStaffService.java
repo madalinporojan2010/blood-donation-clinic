@@ -28,6 +28,10 @@ public class MedicalStaffService {
         this.medicalStaffRepositoryModels = new MedicalStaffRepositoryJPA(iMedicalStaffRepository);
     }
 
+    public MedicalStaffService(MedicalStaffRepositoryModels medicalStaffRepositoryModels) {
+        this.medicalStaffRepositoryModels = medicalStaffRepositoryModels;
+    }
+
     /**
      * Fetches all the entries from the medicalStaff table.
      *

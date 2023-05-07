@@ -13,8 +13,6 @@ public interface BloodBankRepositoryModels {
 
     void updateBloodBank(Long quantity, Long bloodBankId);
 
-    void deleteBloodBank(Long bloodBankId);
-
     boolean existsById(Long bloodBankId);
 
     void deleteById(Long bloodBankId);

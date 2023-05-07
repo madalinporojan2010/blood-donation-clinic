@@ -28,6 +28,10 @@ public class DonationService {
         this.donationRepositoryModels = new DonationRepositoryJPA(iDonationRepository);
     }
 
+    public DonationService(DonationRepositoryModels donationRepositoryModels) {
+        this.donationRepositoryModels = donationRepositoryModels;
+    }
+
     /**
      * Fetches all the entries from the donation table.
      *

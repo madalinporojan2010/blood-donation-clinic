@@ -28,6 +28,10 @@ public class BloodTypeService {
         this.bloodTypeRepositoryModels = new BloodTypeRepositoryJPA(iBloodTypeRepository);
     }
 
+    public BloodTypeService(BloodTypeRepositoryModels bloodTypeRepositoryModels) {
+        this.bloodTypeRepositoryModels = bloodTypeRepositoryModels;
+    }
+
     /**
      * Fetches all the entries from the bloodType table.
      *

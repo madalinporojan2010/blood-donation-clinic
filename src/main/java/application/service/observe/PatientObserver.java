@@ -15,7 +15,7 @@ import application.model.repository.ScheduleRepositoryModels;
  */
 public class PatientObserver implements Observer {
 
-    private final ScheduleRepositoryModels scheduleRepositoryModels;
+    private ScheduleRepositoryModels scheduleRepositoryModels;
 
     /**
      * Constructor that initializes the scheduleRepository object.
@@ -23,6 +23,10 @@ public class PatientObserver implements Observer {
      * @param scheduleRepository The schedule repository that is initialized with.
      */
     public PatientObserver(ScheduleRepositoryModels scheduleRepositoryModels) {
+        this.scheduleRepositoryModels = scheduleRepositoryModels;
+    }
+
+    public void setScheduleRepositoryModels(ScheduleRepositoryModels scheduleRepositoryModels) {
         this.scheduleRepositoryModels = scheduleRepositoryModels;
     }
 
