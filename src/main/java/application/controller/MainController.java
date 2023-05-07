@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 public class MainController {
     private final MainService mainService;
 
+    /**
+     * MainController constructor
+     *
+     * @param mainService MainService instance
+     */
     public MainController(MainService mainService) {
         this.mainService = mainService;
     }

@@ -11,6 +11,8 @@ import application.repository.jpa.mysql.IScheduleRepository;
 import application.service.observe.PatientObservable;
 import application.service.observe.PatientObserver;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,10 +32,12 @@ public class PatientService {
     /**
      * PatientService constructor used for repositories and observables
      * initialization.
+     * JPA only.
      * 
      * @param iPatientRepository  Patient table repository
      * @param iScheduleRepository Schedule table repository
      */
+    @Autowired(required = true)
     public PatientService(IPatientRepository iPatientRepository, IScheduleRepository iScheduleRepository) {
         this.patientRepositoryModels = new PatientRepositoryJPA(iPatientRepository);
 
@@ -42,6 +46,14 @@ public class PatientService {
         this.patientObservable.addObserver(patientObserver);
     }
 
+    /**
+     * PatientService constructor used for repositories and observables
+     * initialization.
+     * Generic.
+     * 
+     * @param patientRepositoryModels  Patient table models
+     * @param scheduleRepositoryModels Schedule table models
+     */
     public PatientService(PatientRepositoryModels patientRepositoryModels,
             ScheduleRepositoryModels scheduleRepositoryModels) {
         this.patientRepositoryModels = patientRepositoryModels;
@@ -51,6 +63,16 @@ public class PatientService {
         this.patientObservable.addObserver(patientObserver);
     }
 
+    /**
+     * PatientService constructor used for repositories and observables
+     * initialization.
+     * Testing only.
+     * 
+     * @param patientRepositoryModels  Patient table models
+     * @param scheduleRepositoryModels Schedule table models
+     * @param patientObserver          Patient observer instance
+     * @param patientObservable        Patient observable instance
+     */
     public PatientService(PatientRepositoryModels patientRepositoryModels,
             ScheduleRepositoryModels scheduleRepositoryModels, PatientObserver patientObserver,
             PatientObservable patientObservable) {

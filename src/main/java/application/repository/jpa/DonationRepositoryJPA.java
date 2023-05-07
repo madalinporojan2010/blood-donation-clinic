@@ -6,6 +6,9 @@ import application.model.Donation;
 import application.model.repository.DonationRepositoryModels;
 import application.repository.jpa.mysql.IDonationRepository;
 
+/**
+ * JPA repository for donation table.
+ */
 public class DonationRepositoryJPA implements DonationRepositoryModels {
     private final IDonationRepository iDonationRepository;
 

@@ -20,6 +20,11 @@ public class PatientObservable extends Observable {
         this.patients = new ArrayList<>();
     }
 
+    /**
+     * Constructor that initializes the patients List with a given list.
+     * 
+     * @param patients the list of patients.
+     */
     public PatientObservable(List<Patient> patients) {
         this.patients = patients;
     }

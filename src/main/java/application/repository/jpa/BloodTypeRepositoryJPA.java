@@ -6,6 +6,9 @@ import application.model.BloodType;
 import application.model.repository.BloodTypeRepositoryModels;
 import application.repository.jpa.mysql.IBloodTypeRepository;
 
+/**
+ * JPA repository for bloodType table.
+ */
 public class BloodTypeRepositoryJPA implements BloodTypeRepositoryModels {
     private final IBloodTypeRepository iBloodTypeRepository;
 

@@ -6,6 +6,9 @@ import application.model.Schedule;
 import application.model.repository.ScheduleRepositoryModels;
 import application.repository.jpa.mysql.IScheduleRepository;
 
+/**
+ * JPA repository for schedule table.
+ */
 public class ScheduleRepositoryJPA implements ScheduleRepositoryModels {
     private final IScheduleRepository iScheduleRepository;
 

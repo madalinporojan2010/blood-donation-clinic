@@ -8,6 +8,9 @@ import application.model.BloodBank;
 import application.model.repository.BloodBankRepositoryModels;
 import application.repository.jpa.mysql.IBloodBankRepository;
 
+/**
+ * JPA repository for bloodBank table.
+ */
 @Repository
 public class BloodBankRepositoryJPA implements BloodBankRepositoryModels {
     private final IBloodBankRepository iBloodBankRepository;
@@ -27,18 +30,13 @@ public class BloodBankRepositoryJPA implements BloodBankRepositoryModels {
     }
 
     @Override
-    public Long findBloodBankByBloodTypeId(Long bloodTypeId) {
+    public BloodBank findBloodBankByBloodTypeId(Long bloodTypeId) {
         return iBloodBankRepository.findBloodBankByBloodTypeId(bloodTypeId);
     }
 
     @Override
     public void saveBloodBank(BloodBank bloodBank) {
         iBloodBankRepository.save(bloodBank);
-    }
-
-    @Override
-    public void updateBloodBank(Long quantity, Long bloodBankId) {
-        iBloodBankRepository.updateBloodBank(quantity, bloodBankId);
     }
 
     @Override

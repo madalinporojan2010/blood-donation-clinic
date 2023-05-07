@@ -6,6 +6,9 @@ import application.model.MedicalStaff;
 import application.model.repository.MedicalStaffRepositoryModels;
 import application.repository.jpa.mysql.IMedicalStaffRepository;
 
+/**
+ * JPA repository for medicalStaff table.
+ */
 public class MedicalStaffRepositoryJPA implements MedicalStaffRepositoryModels {
     private final IMedicalStaffRepository iMedicalStaffRepository;
 

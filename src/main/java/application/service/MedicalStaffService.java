@@ -6,6 +6,8 @@ import application.model.response.StatusResponse;
 import application.repository.jpa.MedicalStaffRepositoryJPA;
 import application.repository.jpa.mysql.IMedicalStaffRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +23,21 @@ public class MedicalStaffService {
 
     /**
      * MedicalStaffService constructor used for repositories initialization.
+     * JPA only.
      * 
      * @param iMedicalStaffRepository medicalStaff table repository
      */
+    @Autowired(required = true)
     public MedicalStaffService(IMedicalStaffRepository iMedicalStaffRepository) {
         this.medicalStaffRepositoryModels = new MedicalStaffRepositoryJPA(iMedicalStaffRepository);
     }
 
+    /**
+     * MedicalStaffService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param medicalStaffRepositoryModels medicalStaff table models
+     */
     public MedicalStaffService(MedicalStaffRepositoryModels medicalStaffRepositoryModels) {
         this.medicalStaffRepositoryModels = medicalStaffRepositoryModels;
     }

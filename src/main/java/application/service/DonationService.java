@@ -6,6 +6,8 @@ import application.model.response.StatusResponse;
 import application.repository.jpa.DonationRepositoryJPA;
 import application.repository.jpa.mysql.IDonationRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +22,22 @@ public class DonationService {
     private final DonationRepositoryModels donationRepositoryModels;
 
     /**
-     * DonationRepository constructor used for repositories initialization.
+     * DonationService constructor used for repositories initialization.
+     * JPA only.
      * 
-     * @param iDonationRepository Schedule table repository
+     * @param iDonationRepository Donation table repository
      */
+    @Autowired(required = true)
     public DonationService(IDonationRepository iDonationRepository) {
         this.donationRepositoryModels = new DonationRepositoryJPA(iDonationRepository);
     }
 
+    /**
+     * DonationService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param donationRepositoryModels Donation table models
+     */
     public DonationService(DonationRepositoryModels donationRepositoryModels) {
         this.donationRepositoryModels = donationRepositoryModels;
     }

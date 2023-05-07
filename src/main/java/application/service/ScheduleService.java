@@ -6,6 +6,8 @@ import application.model.response.StatusResponse;
 import application.repository.jpa.ScheduleRepositoryJPA;
 import application.repository.jpa.mysql.IScheduleRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +22,22 @@ public class ScheduleService {
     private final ScheduleRepositoryModels scheduleRepositoryModels;
 
     /**
-     * IScheduleRepository constructor used for repositories initialization.
+     * ScheduleService constructor used for repositories initialization.
+     * JPA only.
      * 
      * @param iScheduleRepository Schedule table repository
      */
+    @Autowired(required = true)
     public ScheduleService(IScheduleRepository iScheduleRepository) {
         this.scheduleRepositoryModels = new ScheduleRepositoryJPA(iScheduleRepository);
     }
 
+    /**
+     * ScheduleService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param scheduleRepositoryModels schedule table models
+     */
     public ScheduleService(ScheduleRepositoryModels scheduleRepositoryModels) {
         this.scheduleRepositoryModels = scheduleRepositoryModels;
     }

@@ -6,6 +6,8 @@ import application.model.response.StatusResponse;
 import application.repository.jpa.BloodTypeRepositoryJPA;
 import application.repository.jpa.mysql.IBloodTypeRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,14 +22,22 @@ public class BloodTypeService {
     private final BloodTypeRepositoryModels bloodTypeRepositoryModels;
 
     /**
-     * BloodTypeRepository constructor used for repositories initialization.
+     * BloodTypeService constructor used for repositories initialization.
+     * JPA only.
      * 
-     * @param iBloodTypeRepository Schedule table repository
+     * @param iBloodTypeRepository Blood Type table repository
      */
+    @Autowired(required = true)
     public BloodTypeService(IBloodTypeRepository iBloodTypeRepository) {
         this.bloodTypeRepositoryModels = new BloodTypeRepositoryJPA(iBloodTypeRepository);
     }
 
+    /**
+     * BloodTypeService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param bloodTypeRepositoryModels Blood Type table models
+     */
     public BloodTypeService(BloodTypeRepositoryModels bloodTypeRepositoryModels) {
         this.bloodTypeRepositoryModels = bloodTypeRepositoryModels;
     }

@@ -7,6 +7,7 @@ import application.repository.jpa.BloodBankRepositoryJPA;
 import application.repository.jpa.mysql.IBloodBankRepository;
 import application.utils.ResponseMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import java.util.List;
@@ -20,14 +21,22 @@ public class BloodBankService {
     private final BloodBankRepositoryModels bloodBankRepositoryModels;
 
     /**
-     * IBloodBankRepository constructor used for repositories initialization.
+     * BloodBankService constructor used for repositories initialization.
+     * JPA only
      * 
-     * @param iBloodBankRepository Schedule table repository
+     * @param iBloodBankRepository Blood Bank table repository
      */
+    @Autowired(required = true)
     public BloodBankService(IBloodBankRepository iBloodBankRepository) {
         this.bloodBankRepositoryModels = new BloodBankRepositoryJPA(iBloodBankRepository);
     }
 
+    /**
+     * BloodBankService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param bloodBankRepositoryModels Blood Bank table models
+     */
     public BloodBankService(BloodBankRepositoryModels bloodBankRepositoryModels) {
         this.bloodBankRepositoryModels = bloodBankRepositoryModels;
     }

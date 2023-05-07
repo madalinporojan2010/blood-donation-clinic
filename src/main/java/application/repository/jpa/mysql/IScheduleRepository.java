@@ -13,6 +13,12 @@ import org.springframework.data.repository.query.Param;
  * Usual CRUD database operations.
  */
 public interface IScheduleRepository extends JpaRepository<Schedule, Long> {
+    /**
+     * Retrieves all the entries from schedule table that have the given patient id.
+     *
+     * @param patientId the given patient id.
+     * @return Returns a List of BloodBank.
+     */
     @Query(value = "SELECT * FROM blood_clinic.schedule WHERE patient_id = :patientId", nativeQuery = true)
     List<Schedule> findAllByPatientId(@Param("patientId") Long patientId);
 }

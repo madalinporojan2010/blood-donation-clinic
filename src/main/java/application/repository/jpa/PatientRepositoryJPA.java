@@ -6,6 +6,9 @@ import application.model.Patient;
 import application.model.repository.PatientRepositoryModels;
 import application.repository.jpa.mysql.IPatientRepository;
 
+/**
+ * JPA repository for patient table.
+ */
 public class PatientRepositoryJPA implements PatientRepositoryModels {
     private final IPatientRepository iPatientRepository;
 
