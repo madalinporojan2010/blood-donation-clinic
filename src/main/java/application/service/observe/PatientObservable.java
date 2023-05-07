@@ -21,6 +21,15 @@ public class PatientObservable extends Observable {
     }
 
     /**
+     * Constructor that initializes the patients List with a given list.
+     * 
+     * @param patients the list of patients.
+     */
+    public PatientObservable(List<Patient> patients) {
+        this.patients = patients;
+    }
+
+    /**
      * Method that adds a patient to the patients list.
      * 
      * @param patient The added patient.
@@ -37,18 +46,20 @@ public class PatientObservable extends Observable {
      * @param patientId The id of the patient that need to be removed.
      */
     public void removePatient(Long patientId) {
-        int index = -1;
+        int index = 0;
 
         for (Patient p : patients) {
-            index++;
-            if (p.getId().equals(patientId)) {
+            if (p.getId() != null && p.getId().equals(patientId)) {
                 break;
             }
+            index++;
         }
 
-        this.patients.remove(index);
-        setChanged();
-        notifyObservers();
+        if (index >= 0 && index < this.patients.size()) {
+            this.patients.remove(index);
+            setChanged();
+            notifyObservers();
+        }
     }
 
     /**
@@ -58,14 +69,17 @@ public class PatientObservable extends Observable {
      * @return The index of the patient with the given id.
      */
     public int getIndexOfPatient(Long patientId) {
-        int index = -1;
+        int index = 0;
         for (Patient p : patients) {
-            index++;
-            if (p.getId().equals(patientId)) {
+            if (p.getId() != null && p.getId().equals(patientId)) {
                 break;
             }
+            index++;
         }
-        return index;
+        if (index >= 0 && index < this.patients.size()) {
+            return index;
+        }
+        return -1;
     }
 
     public void setPatients(List<Patient> patients) {

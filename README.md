@@ -38,13 +38,59 @@ In cazul unui GET, se acceseaza endpoint-ul /api/v1/bloodBank si se transmit toa
 
 Pentru DELETE, se transmite la /api/v1/bloodBank/{bloodBankId} id-ul entry-ului din tabela blood_bank care va fii sters. Se transmite inapoi un mesaj de succes alaturi de un http code OK/Internal server error.
 
-> API's:
-> > - /api/v1/patients
-> > - /api/v1/bloodBank
-> > - /api/v1/bloodType
-> > - /api/v1/donation
-> > - /api/v1/schedule
-> > - /api/v1/medicalStaff
+> **Endpoints:**
+
+> > **General:**
+> > - Use this to check the backend application health status.
+> > - `/api/v1/health`
+
+> > **Blood Bank model:**
+> > - Use **POST** for updating a blood bank entry.
+> > - Use **PUT** for creating a blood bank entry.
+> > - Use **GET** for fetching all the blood bank entries.
+> > - Use **DELETE** for deleting a blood bank entry by Id.
+> > - `/api/v1/bloodBank/` **[POST, PUT, GET]**
+> > - `/api/v1/bloodBank/{bloodBankId}` **[DELETE]**
+
+> > **Blood Type model:**
+> > - Use **POST** for updating a blood type entry.
+> > - Use **PUT** for creating a blood type entry.
+> > - Use **GET** for fetching all the blood type entries.
+> > - Use **DELETE** for deleting a blood type entry by Id.
+> > - `/api/v1/bloodType` **[POST, PUT, GET]**
+> > - `/api/v1/bloodType{bloodTypeId}` **[DELETE]**
+
+> > **Donation model:**
+> > - Use **POST** for updating a donation entry.
+> > - Use **PUT** for creating a donation entry.
+> > - Use **GET** for fetching all the donation entries.
+> > - Use **DELETE** for deleting a donation entry by Id.
+> > - `/api/v1/donation` **[POST, PUT, GET]**
+> > - `/api/v1/donation{donationId}` **[DELETE]**
+
+> > **Medical Staff model:**
+> > - Use **POST** for updating a medical staff entry.
+> > - Use **PUT** for creating a medical staff entry.
+> > - Use **GET** for fetching all the medical staff entries.
+> > - Use **DELETE** for deleting a medical staff entry by Id.
+> > - `/api/v1/medicalStaff` **[POST, PUT, GET]**
+> > - `/api/v1/medicalStaff{medicalStaffId}` **[DELETE]**
+
+> > **Patient model:**
+> > - Use **POST** for updating a patient entry.
+> > - Use **PUT** for creating a patient entry.
+> > - Use **GET** for fetching all the patient entries.
+> > - Use **DELETE** for deleting a patient entry by Id.
+> > - `/api/v1/patient` **[POST, PUT, GET]**
+> > - `/api/v1/patient{patientId}` **[DELETE]**
+
+> > **Schedule model:**
+> > - Use **POST** for updating a schedule entry.
+> > - Use **PUT** for creating a schedule entry.
+> > - Use **GET** for fetching all the schedule entries.
+> > - Use **DELETE** for deleting a schedule entry by Id.
+> > - `/api/v1/schedule` **[POST, PUT, GET]**
+> > - `/api/v1/schedule{scheduleId}` **[DELETE]**
 
 ## Observer design pattern
 Datorita incertitudinii pacientilor, care pot sau nu sa isi cunoasca tipul de sange, programarile lor din schedule table trebuie modificata automat in momentul determinarii tipului de sange de cadrul medical. Solutia pentru aceasta problema este utilizarea unui design pattern Observer, care contine o lista de pacienti (PatientObservable), in care sunt adaugati/scosi pacientii in momentul in care acestia sunt introdusi/scosi si in/din baza de date. 

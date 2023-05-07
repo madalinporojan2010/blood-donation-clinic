@@ -26,6 +26,11 @@ import java.util.List;
 public class DonationController {
     private final DonationService donationService;
 
+    /**
+     * DonationController constructor
+     *
+     * @param donationService DonationService instance
+     */
     public DonationController(DonationService donationService) {
         this.donationService = donationService;
     }

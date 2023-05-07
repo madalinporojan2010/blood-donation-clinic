@@ -14,6 +14,16 @@ public class BloodBank {
     private BloodType bloodType;
     private Long quantity;
 
+    public BloodBank() {
+        super();
+    }
+
+    public BloodBank(Long id, BloodType bloodType, Long quantity) {
+        this.id = id;
+        this.bloodType = bloodType;
+        this.quantity = quantity;
+    }
+
     public Long getId() {
         return id;
     }

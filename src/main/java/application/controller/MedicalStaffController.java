@@ -26,6 +26,11 @@ import java.util.List;
 public class MedicalStaffController {
     private final MedicalStaffService medicalStaffService;
 
+    /**
+     * MedicalStaffController constructor
+     *
+     * @param medicalStaffService MedicalStaffService instance
+     */
     public MedicalStaffController(MedicalStaffService medicalStaffService) {
         this.medicalStaffService = medicalStaffService;
     }

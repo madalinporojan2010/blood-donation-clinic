@@ -1,12 +1,18 @@
 package application.service;
 
 import application.model.Patient;
+import application.model.repository.PatientRepositoryModels;
+import application.model.repository.ScheduleRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.PatientRepository;
-import application.repository.ScheduleRepository;
+import application.repository.jpa.PatientRepositoryJPA;
+import application.repository.jpa.ScheduleRepositoryJPA;
+import application.repository.jpa.mysql.IPatientRepository;
+import application.repository.jpa.mysql.IScheduleRepository;
 import application.service.observe.PatientObservable;
 import application.service.observe.PatientObserver;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,22 +25,63 @@ import java.util.Optional;
 @Service
 public class PatientService {
 
-    private final PatientRepository patientRepository;
+    private final PatientRepositoryModels patientRepositoryModels;
     private final PatientObservable patientObservable;
     private final PatientObserver patientObserver;
 
     /**
      * PatientService constructor used for repositories and observables
      * initialization.
+     * JPA only.
      * 
-     * @param patientRepository  Patient table repository
-     * @param scheduleRepository Schedule table repository
+     * @param iPatientRepository  Patient table repository
+     * @param iScheduleRepository Schedule table repository
      */
-    public PatientService(PatientRepository patientRepository, ScheduleRepository scheduleRepository) {
-        this.patientRepository = patientRepository;
+    @Autowired(required = true)
+    public PatientService(IPatientRepository iPatientRepository, IScheduleRepository iScheduleRepository) {
+        this.patientRepositoryModels = new PatientRepositoryJPA(iPatientRepository);
 
-        this.patientObserver = new PatientObserver(scheduleRepository);
+        this.patientObserver = new PatientObserver(new ScheduleRepositoryJPA(iScheduleRepository));
         this.patientObservable = new PatientObservable();
+        this.patientObservable.addObserver(patientObserver);
+    }
+
+    /**
+     * PatientService constructor used for repositories and observables
+     * initialization.
+     * Generic.
+     * 
+     * @param patientRepositoryModels  Patient table models
+     * @param scheduleRepositoryModels Schedule table models
+     */
+    public PatientService(PatientRepositoryModels patientRepositoryModels,
+            ScheduleRepositoryModels scheduleRepositoryModels) {
+        this.patientRepositoryModels = patientRepositoryModels;
+
+        this.patientObserver = new PatientObserver(scheduleRepositoryModels);
+        this.patientObservable = new PatientObservable();
+        this.patientObservable.addObserver(patientObserver);
+    }
+
+    /**
+     * PatientService constructor used for repositories and observables
+     * initialization.
+     * Testing only.
+     * 
+     * @param patientRepositoryModels  Patient table models
+     * @param scheduleRepositoryModels Schedule table models
+     * @param patientObserver          Patient observer instance
+     * @param patientObservable        Patient observable instance
+     */
+    public PatientService(PatientRepositoryModels patientRepositoryModels,
+            ScheduleRepositoryModels scheduleRepositoryModels, PatientObserver patientObserver,
+            PatientObservable patientObservable) {
+        this.patientRepositoryModels = patientRepositoryModels;
+
+        this.patientObserver = patientObserver;
+        this.patientObserver.setScheduleRepositoryModels(scheduleRepositoryModels);
+
+        this.patientObservable = patientObservable;
         this.patientObservable.addObserver(patientObserver);
     }
 
@@ -46,7 +93,7 @@ public class PatientService {
     public List<Patient> findAllPatients() {
         List<Patient> fetchedPatient = null;
         try {
-            fetchedPatient = patientRepository.findAll();
+            fetchedPatient = patientRepositoryModels.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -63,11 +110,12 @@ public class PatientService {
     public StatusResponse savePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (patient.getBloodType().equals(null)) {
+
+            if (patient.getBloodType() == null) {
                 patientObservable.addPatient(patient);
             }
 
-            patientRepository.save(patient);
+            patientRepositoryModels.save(patient);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -87,7 +135,7 @@ public class PatientService {
     public StatusResponse updatePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (patientRepository.existsById(patient.getId())) {
+            if (patientRepositoryModels.existsById(patient.getId())) {
                 if (patient.getBloodType() != null && this.patientObservable.getPatients() != null) {
 
                     Optional<Patient> newPatientOptional = this.patientObservable.getPatients().stream()
@@ -105,7 +153,7 @@ public class PatientService {
                     }
                 }
 
-                patientRepository.save(patient);
+                patientRepositoryModels.save(patient);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -127,10 +175,10 @@ public class PatientService {
     public StatusResponse deletePatient(Long patientId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (patientRepository.existsById(patientId)) {
+            if (patientRepositoryModels.existsById(patientId)) {
                 this.patientObservable.removePatient(patientId);
 
-                patientRepository.deleteById(patientId);
+                patientRepositoryModels.deleteById(patientId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

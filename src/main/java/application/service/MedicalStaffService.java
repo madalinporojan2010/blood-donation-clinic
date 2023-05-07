@@ -1,9 +1,13 @@
 package application.service;
 
 import application.model.MedicalStaff;
+import application.model.repository.MedicalStaffRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.MedicalStaffRepository;
+import application.repository.jpa.MedicalStaffRepositoryJPA;
+import application.repository.jpa.mysql.IMedicalStaffRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +19,27 @@ import java.util.List;
 @Service
 public class MedicalStaffService {
 
-    private final MedicalStaffRepository medicalStaffRepository;
+    private final MedicalStaffRepositoryModels medicalStaffRepositoryModels;
 
     /**
      * MedicalStaffService constructor used for repositories initialization.
+     * JPA only.
      * 
-     * @param medicalStaffRepository Schedule table repository
+     * @param iMedicalStaffRepository medicalStaff table repository
      */
-    public MedicalStaffService(MedicalStaffRepository medicalStaffRepository) {
-        this.medicalStaffRepository = medicalStaffRepository;
+    @Autowired(required = true)
+    public MedicalStaffService(IMedicalStaffRepository iMedicalStaffRepository) {
+        this.medicalStaffRepositoryModels = new MedicalStaffRepositoryJPA(iMedicalStaffRepository);
+    }
+
+    /**
+     * MedicalStaffService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param medicalStaffRepositoryModels medicalStaff table models
+     */
+    public MedicalStaffService(MedicalStaffRepositoryModels medicalStaffRepositoryModels) {
+        this.medicalStaffRepositoryModels = medicalStaffRepositoryModels;
     }
 
     /**
@@ -34,7 +50,7 @@ public class MedicalStaffService {
     public List<MedicalStaff> findAllMedicalStaffs() {
         List<MedicalStaff> fetchedMedicalStaff = null;
         try {
-            fetchedMedicalStaff = medicalStaffRepository.findAll();
+            fetchedMedicalStaff = medicalStaffRepositoryModels.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -50,7 +66,7 @@ public class MedicalStaffService {
     public StatusResponse saveMedicalStaff(MedicalStaff medicalStaff) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            medicalStaffRepository.save(medicalStaff);
+            medicalStaffRepositoryModels.save(medicalStaff);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -68,8 +84,8 @@ public class MedicalStaffService {
     public StatusResponse updateMedicalStaff(MedicalStaff medicalStaff) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (medicalStaffRepository.existsById(medicalStaff.getId())) {
-                medicalStaffRepository.save(medicalStaff);
+            if (medicalStaffRepositoryModels.existsById(medicalStaff.getId())) {
+                medicalStaffRepositoryModels.save(medicalStaff);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -90,8 +106,8 @@ public class MedicalStaffService {
     public StatusResponse deleteMedicalStaff(Long medicalStaffId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (medicalStaffRepository.existsById(medicalStaffId)) {
-                medicalStaffRepository.deleteById(medicalStaffId);
+            if (medicalStaffRepositoryModels.existsById(medicalStaffId)) {
+                medicalStaffRepositoryModels.deleteById(medicalStaffId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

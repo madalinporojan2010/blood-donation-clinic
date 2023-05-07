@@ -1,9 +1,13 @@
 package application.service;
 
 import application.model.BloodType;
+import application.model.repository.BloodTypeRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.BloodTypeRepository;
+import application.repository.jpa.BloodTypeRepositoryJPA;
+import application.repository.jpa.mysql.IBloodTypeRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +19,27 @@ import java.util.List;
 @Service
 public class BloodTypeService {
 
-    private final BloodTypeRepository bloodTypeRepository;
+    private final BloodTypeRepositoryModels bloodTypeRepositoryModels;
 
     /**
-     * BloodTypeRepository constructor used for repositories initialization.
+     * BloodTypeService constructor used for repositories initialization.
+     * JPA only.
      * 
-     * @param bloodTypeRepository Schedule table repository
+     * @param iBloodTypeRepository Blood Type table repository
      */
-    public BloodTypeService(BloodTypeRepository bloodTypeRepository) {
-        this.bloodTypeRepository = bloodTypeRepository;
+    @Autowired(required = true)
+    public BloodTypeService(IBloodTypeRepository iBloodTypeRepository) {
+        this.bloodTypeRepositoryModels = new BloodTypeRepositoryJPA(iBloodTypeRepository);
+    }
+
+    /**
+     * BloodTypeService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param bloodTypeRepositoryModels Blood Type table models
+     */
+    public BloodTypeService(BloodTypeRepositoryModels bloodTypeRepositoryModels) {
+        this.bloodTypeRepositoryModels = bloodTypeRepositoryModels;
     }
 
     /**
@@ -34,7 +50,7 @@ public class BloodTypeService {
     public List<BloodType> findAllBloodTypes() {
         List<BloodType> fetchedBloodType = null;
         try {
-            fetchedBloodType = bloodTypeRepository.findAll();
+            fetchedBloodType = bloodTypeRepositoryModels.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -50,7 +66,7 @@ public class BloodTypeService {
     public StatusResponse saveBloodType(BloodType bloodType) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            bloodTypeRepository.save(bloodType);
+            bloodTypeRepositoryModels.save(bloodType);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -68,8 +84,8 @@ public class BloodTypeService {
     public StatusResponse updateBloodType(BloodType bloodType) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodTypeRepository.existsById(bloodType.getId())) {
-                bloodTypeRepository.save(bloodType);
+            if (bloodTypeRepositoryModels.existsById(bloodType.getId())) {
+                bloodTypeRepositoryModels.save(bloodType);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -90,8 +106,8 @@ public class BloodTypeService {
     public StatusResponse deleteBloodType(Long bloodTypeId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodTypeRepository.existsById(bloodTypeId)) {
-                bloodTypeRepository.deleteById(bloodTypeId);
+            if (bloodTypeRepositoryModels.existsById(bloodTypeId)) {
+                bloodTypeRepositoryModels.deleteById(bloodTypeId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

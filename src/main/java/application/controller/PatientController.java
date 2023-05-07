@@ -26,6 +26,11 @@ import java.util.List;
 public class PatientController {
     private final PatientService patientService;
 
+    /**
+     * PatientController constructor
+     *
+     * @param patientService PatientService instance
+     */
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }

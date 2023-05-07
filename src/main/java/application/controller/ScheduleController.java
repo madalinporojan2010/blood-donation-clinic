@@ -26,6 +26,11 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
+    /**
+     * ScheduleController constructor
+     *
+     * @param scheduleService ScheduleService instance
+     */
     public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
     }

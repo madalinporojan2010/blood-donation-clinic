@@ -1,9 +1,13 @@
 package application.service;
 
 import application.model.BloodBank;
+import application.model.repository.BloodBankRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.BloodBankRepository;
+import application.repository.jpa.BloodBankRepositoryJPA;
+import application.repository.jpa.mysql.IBloodBankRepository;
 import application.utils.ResponseMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
 import java.util.List;
@@ -14,15 +18,27 @@ import java.util.List;
  */
 @Service
 public class BloodBankService {
-    private final BloodBankRepository bloodBankRepository;
+    private final BloodBankRepositoryModels bloodBankRepositoryModels;
 
     /**
-     * BloodBankRepository constructor used for repositories initialization.
+     * BloodBankService constructor used for repositories initialization.
+     * JPA only
      * 
-     * @param bloodBankRepository Schedule table repository
+     * @param iBloodBankRepository Blood Bank table repository
      */
-    public BloodBankService(BloodBankRepository bloodBankRepository) {
-        this.bloodBankRepository = bloodBankRepository;
+    @Autowired(required = true)
+    public BloodBankService(IBloodBankRepository iBloodBankRepository) {
+        this.bloodBankRepositoryModels = new BloodBankRepositoryJPA(iBloodBankRepository);
+    }
+
+    /**
+     * BloodBankService constructor used for repositories initialization.
+     * Generic.
+     * 
+     * @param bloodBankRepositoryModels Blood Bank table models
+     */
+    public BloodBankService(BloodBankRepositoryModels bloodBankRepositoryModels) {
+        this.bloodBankRepositoryModels = bloodBankRepositoryModels;
     }
 
     /**
@@ -33,7 +49,7 @@ public class BloodBankService {
     public List<BloodBank> findAllBloodBank() {
         List<BloodBank> fetchedBloodBank = null;
         try {
-            fetchedBloodBank = bloodBankRepository.findAllBloodBank();
+            fetchedBloodBank = bloodBankRepositoryModels.findAllBloodBank();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -49,7 +65,7 @@ public class BloodBankService {
     public StatusResponse saveBloodBank(BloodBank bloodBank) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            bloodBankRepository.save(bloodBank);
+            bloodBankRepositoryModels.saveBloodBank(bloodBank);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -67,8 +83,8 @@ public class BloodBankService {
     public StatusResponse updateBloodBank(BloodBank bloodBank) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodBankRepository.existsById(bloodBank.getId())) {
-                bloodBankRepository.save(bloodBank);
+            if (bloodBankRepositoryModels.existsById(bloodBank.getId())) {
+                bloodBankRepositoryModels.saveBloodBank(bloodBank);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -89,8 +105,8 @@ public class BloodBankService {
     public StatusResponse deleteBloodBank(Long bloodBankId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (bloodBankRepository.existsById(bloodBankId)) {
-                bloodBankRepository.deleteById(bloodBankId);
+            if (bloodBankRepositoryModels.existsById(bloodBankId)) {
+                bloodBankRepositoryModels.deleteById(bloodBankId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

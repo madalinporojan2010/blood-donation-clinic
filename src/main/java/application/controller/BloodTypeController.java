@@ -26,6 +26,11 @@ import java.util.List;
 public class BloodTypeController {
     private final BloodTypeService bloodTypeService;
 
+    /**
+     * BloodTypeController constructor
+     *
+     * @param bloodTypeService BloodTypeService instance
+     */
     public BloodTypeController(BloodTypeService bloodTypeService) {
         this.bloodTypeService = bloodTypeService;
     }

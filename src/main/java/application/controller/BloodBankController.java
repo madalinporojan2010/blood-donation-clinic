@@ -26,6 +26,11 @@ import java.util.List;
 public class BloodBankController {
     private final BloodBankService bloodBankService;
 
+    /**
+     * BloodBankController constructor
+     *
+     * @param bloodBankService BloodBankService instance
+     */
     public BloodBankController(BloodBankService bloodBankService) {
         this.bloodBankService = bloodBankService;
     }
