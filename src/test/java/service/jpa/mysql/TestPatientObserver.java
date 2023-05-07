@@ -19,6 +19,9 @@ import application.model.Schedule;
 import application.model.repository.ScheduleRepositoryModels;
 import application.service.observe.PatientObserver;
 
+/**
+ * Test class for PatientObserver
+ */
 @DisplayName("PatientObserver Service")
 @ExtendWith(MockitoExtension.class)
 public class TestPatientObserver {
@@ -27,11 +30,17 @@ public class TestPatientObserver {
     @Mock
     private ScheduleRepositoryModels scheduleRepositoryModels;
 
+    /**
+     * SetUp method that instantiates the patientObserver;
+     */
     @BeforeEach
     void setUp() {
         patientObserver = new PatientObserver(scheduleRepositoryModels);
     }
 
+    /**
+     * Test method for update method.
+     */
     @Test
     @DisplayName("Ensure `update` works")
     void testUpdate() {

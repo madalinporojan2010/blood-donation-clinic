@@ -12,10 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import application.utils.ResponseMessage;
 
+/**
+ * Test class for ResponseMessage utils
+ */
 @DisplayName("ResponseMessage Utils")
 @ExtendWith(MockitoExtension.class)
 public class TestResponseMessage {
-
+    /**
+     * Test method for printMethodErrorString method.
+     */
     @Test
     @DisplayName("Ensure `printMethodErrorString` works")
     void testPrintMethodErrorString() throws Exception {

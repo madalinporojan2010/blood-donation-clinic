@@ -20,6 +20,9 @@ import application.model.repository.DonationRepositoryModels;
 import application.service.DonationService;
 import application.utils.ResponseMessage;
 
+/**
+ * Test class for Donation service
+ */
 @DisplayName("Donation Service")
 @ExtendWith(MockitoExtension.class)
 public class TestDonation {
@@ -28,11 +31,17 @@ public class TestDonation {
     @Mock
     private DonationRepositoryModels donationRepositoryModels;
 
+    /**
+     * SetUp method that instantiates the donationService;
+     */
     @BeforeEach
     void setUp() {
         this.donationService = new DonationService(donationRepositoryModels);
     }
 
+    /**
+     * Test method for findAllDonations method.
+     */
     @Test
     @DisplayName("Ensure `findAllDonations` works")
     void testFindAllDonation() {
@@ -43,6 +52,9 @@ public class TestDonation {
         verify(donationRepositoryModels).findAll();
     }
 
+    /**
+     * Test method for saveDonation method.
+     */
     @Test
     @DisplayName("Ensure `saveDonation` works")
     void testSaveDonation() {
@@ -52,6 +64,9 @@ public class TestDonation {
                 donationService.saveDonation(donation).getMessage());
     }
 
+    /**
+     * Test method for updateDonation method.
+     */
     @Test
     @DisplayName("Ensure `updateDonation` works")
     void testUpdateDonation() {
@@ -69,6 +84,9 @@ public class TestDonation {
         verify(donationRepositoryModels, times(1)).save(donation);
     }
 
+    /**
+     * Test method for deleteDonation method.
+     */
     @Test
     @DisplayName("Ensure `deleteDonation` works")
     void testDeleteDonation() {

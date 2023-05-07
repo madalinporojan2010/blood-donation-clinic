@@ -20,6 +20,9 @@ import application.model.repository.BloodBankRepositoryModels;
 import application.service.BloodBankService;
 import application.utils.ResponseMessage;
 
+/**
+ * Test class for bloodBank service
+ */
 @DisplayName("BloodBank Service")
 @ExtendWith(MockitoExtension.class)
 public class TestBloodBank {
@@ -28,11 +31,17 @@ public class TestBloodBank {
     @Mock
     private BloodBankRepositoryModels bloodBankRepositoryModels;
 
+    /**
+     * SetUp method that instantiates the bloodBankService;
+     */
     @BeforeEach
     void setUp() {
         this.bloodBankService = new BloodBankService(bloodBankRepositoryModels);
     }
 
+    /**
+     * Test method for findAllBloodBank method.
+     */
     @Test
     @DisplayName("Ensure `findAllBloodBank` works")
     void testFindAllBloodBank() {
@@ -43,6 +52,9 @@ public class TestBloodBank {
         verify(bloodBankRepositoryModels).findAllBloodBank();
     }
 
+    /**
+     * Test method for saveBloodBank method.
+     */
     @Test
     @DisplayName("Ensure `saveBloodBank` works")
     void testSaveBloodBank() {
@@ -52,6 +64,9 @@ public class TestBloodBank {
                 bloodBankService.saveBloodBank(bloodBank).getMessage());
     }
 
+    /**
+     * Test method for updateBloodBank method.
+     */
     @Test
     @DisplayName("Ensure `updateBloodBank` works")
     void testUpdateBloodBank() {
@@ -69,6 +84,9 @@ public class TestBloodBank {
         verify(bloodBankRepositoryModels, times(1)).saveBloodBank(bloodBank);
     }
 
+    /**
+     * Test method for deleteBloodBank method.
+     */
     @Test
     @DisplayName("Ensure `deleteBloodBank` works")
     void testDeleteBloodBank() {

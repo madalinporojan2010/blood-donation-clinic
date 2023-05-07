@@ -20,6 +20,9 @@ import application.model.repository.ScheduleRepositoryModels;
 import application.service.ScheduleService;
 import application.utils.ResponseMessage;
 
+/**
+ * Test class for Schedule service
+ */
 @DisplayName("Schedule Service")
 @ExtendWith(MockitoExtension.class)
 public class TestSchedule {
@@ -28,11 +31,17 @@ public class TestSchedule {
     @Mock
     private ScheduleRepositoryModels scheduleRepositoryModels;
 
+    /**
+     * SetUp method that instantiates the scheduleService;
+     */
     @BeforeEach
     void setUp() {
         this.scheduleService = new ScheduleService(scheduleRepositoryModels);
     }
 
+    /**
+     * Test method for findAllSchedules method.
+     */
     @Test
     @DisplayName("Ensure `findAllSchedules` works")
     void testFindAllSchedule() {
@@ -43,6 +52,9 @@ public class TestSchedule {
         verify(scheduleRepositoryModels).findAll();
     }
 
+    /**
+     * Test method for saveSchedule method.
+     */
     @Test
     @DisplayName("Ensure `saveSchedule` works")
     void testSaveSchedule() {
@@ -52,6 +64,9 @@ public class TestSchedule {
                 scheduleService.saveSchedule(schedule).getMessage());
     }
 
+    /**
+     * Test method for updateSchedule method.
+     */
     @Test
     @DisplayName("Ensure `updateSchedule` works")
     void testUpdateSchedule() {
@@ -69,6 +84,9 @@ public class TestSchedule {
         verify(scheduleRepositoryModels, times(1)).save(schedule);
     }
 
+    /**
+     * Test method for deleteSchedule method.
+     */
     @Test
     @DisplayName("Ensure `deleteSchedule` works")
     void testDeleteSchedule() {

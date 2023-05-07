@@ -17,11 +17,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import application.model.Patient;
 import application.service.observe.PatientObservable;
 
+/**
+ * Test class for PatientObservable
+ */
 @DisplayName("PatientObservable Service")
 @ExtendWith(MockitoExtension.class)
 public class TestPatientObservable {
     private PatientObservable patientObservable;
 
+    /**
+     * Test method for addPatient method.
+     */
     @Test
     @DisplayName("Ensure `addPatient` works")
     void testAddPatient() {
@@ -33,6 +39,9 @@ public class TestPatientObservable {
         verify(patients).add(patient);
     }
 
+    /**
+     * Test method for removePatient method.
+     */
     @Test
     @DisplayName("Ensure `removePatient` works")
     void testRemovePatient() {
@@ -58,6 +67,9 @@ public class TestPatientObservable {
         assertFalse(patients.contains(patientToDelete));
     }
 
+    /**
+     * Test method for getIndexOfPatient method.
+     */
     @Test
     @DisplayName("Ensure `getIndexOfPatient` works")
     void testGetIndexOfPatient() {

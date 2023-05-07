@@ -26,6 +26,9 @@ import application.service.observe.PatientObservable;
 import application.service.observe.PatientObserver;
 import application.utils.ResponseMessage;
 
+/**
+ * Test class for Patient service
+ */
 @DisplayName("Patient Service")
 @ExtendWith(MockitoExtension.class)
 public class TestPatient {
@@ -43,6 +46,9 @@ public class TestPatient {
         @Mock
         private PatientObserver patientObserver;
 
+        /**
+         * SetUp method that instantiates the patientService;
+         */
         @BeforeEach
         void setUp() {
                 this.patientService = new PatientService(patientRepositoryModels, scheduleRepositoryModels,
@@ -50,6 +56,9 @@ public class TestPatient {
                                 patientObservable);
         }
 
+        /**
+         * Test method for findAllPatients method.
+         */
         @Test
         @DisplayName("Ensure `findAllPatients` works")
         void testFindAllPatient() {
@@ -60,6 +69,9 @@ public class TestPatient {
                 verify(patientRepositoryModels).findAll();
         }
 
+        /**
+         * Test method for savePatient method.
+         */
         @Test
         @DisplayName("Ensure `savePatient` works")
         void testSavePatient() {
@@ -79,6 +91,9 @@ public class TestPatient {
                 verify(patientRepositoryModels, times(2)).save(patient);
         }
 
+        /**
+         * Test method for updatePatient method.
+         */
         @Test
         @DisplayName("Ensure `updatePatient` works")
         void testUpdatePatient() {
@@ -125,6 +140,9 @@ public class TestPatient {
                 verify(patientObserver).update(this.patientObservable, newPatient);
         }
 
+        /**
+         * Test method for deletePatient method.
+         */
         @Test
         @DisplayName("Ensure `deletePatient` works")
         void testDeletePatient() {

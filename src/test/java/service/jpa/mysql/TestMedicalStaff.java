@@ -20,6 +20,9 @@ import application.model.repository.MedicalStaffRepositoryModels;
 import application.service.MedicalStaffService;
 import application.utils.ResponseMessage;
 
+/**
+ * Test class for MedicalStaff service
+ */
 @DisplayName("MedicalStaff Service")
 @ExtendWith(MockitoExtension.class)
 public class TestMedicalStaff {
@@ -28,11 +31,17 @@ public class TestMedicalStaff {
     @Mock
     private MedicalStaffRepositoryModels medicalStaffRepositoryModels;
 
+    /**
+     * SetUp method that instantiates the medicalStaffService;
+     */
     @BeforeEach
     void setUp() {
         this.medicalStaffService = new MedicalStaffService(medicalStaffRepositoryModels);
     }
 
+    /**
+     * Test method for findAllMedicalStaffs method.
+     */
     @Test
     @DisplayName("Ensure `findAllMedicalStaffs` works")
     void testFindAllMedicalStaff() {
@@ -43,6 +52,9 @@ public class TestMedicalStaff {
         verify(medicalStaffRepositoryModels).findAll();
     }
 
+    /**
+     * Test method for saveMedicalStaff method.
+     */
     @Test
     @DisplayName("Ensure `saveMedicalStaff` works")
     void testSaveMedicalStaff() {
@@ -52,6 +64,9 @@ public class TestMedicalStaff {
                 medicalStaffService.saveMedicalStaff(medicalStaff).getMessage());
     }
 
+    /**
+     * Test method for updateMedicalStaff method.
+     */
     @Test
     @DisplayName("Ensure `updateMedicalStaff` works")
     void testUpdateMedicalStaff() {
@@ -69,6 +84,9 @@ public class TestMedicalStaff {
         verify(medicalStaffRepositoryModels, times(1)).save(medicalStaff);
     }
 
+    /**
+     * Test method for deleteMedicalStaff method.
+     */
     @Test
     @DisplayName("Ensure `deleteMedicalStaff` works")
     void testDeleteMedicalStaff() {
