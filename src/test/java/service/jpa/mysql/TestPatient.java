@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 
 import application.model.Patient;
 import application.model.repository.PatientRepositoryModels;
@@ -92,6 +95,20 @@ public class TestPatient {
                 // bloodType not null and patientObservable patients not null:
                 when(patient.getBloodType()).thenReturn(Mockito.mock());
                 when(patientObservable.getPatients()).thenReturn(Mockito.mock());
+
+                Patient newPatient = Mockito.mock();
+
+                Answer<Stream<Patient>> answerNewPatient = new Answer<Stream<Patient>>() {
+                        @Override
+                        public Stream<Patient> answer(InvocationOnMock invocation) throws Throwable {
+                                return Stream.of(newPatient);
+                        }
+                };
+
+                when(patientObservable.getPatients().stream()
+                                .filter(p -> p.getId().equals(patient.getId())).findAny())
+                                .thenAnswer(answerNewPatient);
+
                 assertEquals(ResponseMessage.SUCCESS,
                                 patientService.updatePatient(patient).getMessage());
 
@@ -102,8 +119,10 @@ public class TestPatient {
 
                 verify(patientRepositoryModels, times(3)).existsById(patient.getId());
                 verify(patientRepositoryModels, times(2)).save(patient);
-                verify(patient, times(2)).getBloodType();
-
+                verify(patient, times(3)).getBloodType();
+                verify(patientObservable).getIndexOfPatient(newPatient.getId());
+                verify(patientObservable.getPatients()).set(newPatient.getId().intValue(), newPatient);
+                verify(patientObserver).update(this.patientObservable, newPatient);
         }
 
         @Test

@@ -46,13 +46,13 @@ public class PatientObservable extends Observable {
      * @param patientId The id of the patient that need to be removed.
      */
     public void removePatient(Long patientId) {
-        int index = -1;
+        int index = 0;
 
         for (Patient p : patients) {
-            index++;
             if (p.getId() != null && p.getId().equals(patientId)) {
                 break;
             }
+            index++;
         }
 
         if (index >= 0 && index < this.patients.size()) {
@@ -69,12 +69,12 @@ public class PatientObservable extends Observable {
      * @return The index of the patient with the given id.
      */
     public int getIndexOfPatient(Long patientId) {
-        int index = -1;
+        int index = 0;
         for (Patient p : patients) {
-            index++;
             if (p.getId() != null && p.getId().equals(patientId)) {
                 break;
             }
+            index++;
         }
         if (index >= 0 && index < this.patients.size()) {
             return index;

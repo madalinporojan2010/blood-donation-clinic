@@ -1,5 +1,6 @@
 package service.jpa.mysql;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -7,11 +8,9 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -23,17 +22,11 @@ import application.service.observe.PatientObservable;
 public class TestPatientObservable {
     private PatientObservable patientObservable;
 
-    @Mock
-    private List<Patient> patients;
-
-    @BeforeEach
-    void setUp() {
-        patientObservable = new PatientObservable(patients);
-    }
-
     @Test
     @DisplayName("Ensure `addPatient` works")
     void testAddPatient() {
+        List<Patient> patients = Mockito.mock();
+        patientObservable = new PatientObservable(patients);
         Patient patient = Mockito.mock();
 
         patientObservable.addPatient(patient);
@@ -43,51 +36,51 @@ public class TestPatientObservable {
     @Test
     @DisplayName("Ensure `removePatient` works")
     void testRemovePatient() {
-        Patient testPatient = Mockito.mock();
-        Long testPatientId = Long.valueOf(1);
+        List<Patient> patients = new ArrayList<>();
+        int patientsMockListSize = 30;
 
-        when(testPatient.getId()).thenReturn(testPatientId);
+        Patient patientToDelete = Mockito.mock();
+        when(patientToDelete.getId()).thenReturn(Long.valueOf(1));
 
-        List<Patient> patients = new ArrayList<Patient>() {
-            {
-                add(new Patient());
-                add(new Patient());
-                add(new Patient());
-                add(testPatient);
-                add(new Patient());
-                add(new Patient());
-            }
-        };
-        int initSize = patients.size();
-
+        for (int i = 0; i < patientsMockListSize; i++) {
+            Patient patient = Mockito.mock();
+            patients.add(patient);
+        }
+        // no patient to delete
         patientObservable = new PatientObservable(patients);
+        patientObservable.removePatient(patientToDelete.getId());
+        assertFalse(patients.contains(patientToDelete));
 
-        patientObservable.removePatient(testPatient.getId());
-        assertTrue(patients.size() == initSize - 1);
+        // patient to delete
+        patients.add(patientToDelete);
+        patientObservable = new PatientObservable(patients);
+        patientObservable.removePatient(patientToDelete.getId());
+        assertFalse(patients.contains(patientToDelete));
     }
 
     @Test
     @DisplayName("Ensure `getIndexOfPatient` works")
     void testGetIndexOfPatient() {
-        Patient testPatient = Mockito.mock();
-        Long testPatientId = Long.valueOf(1);
-        int testPatientIndex = 3;
+        List<Patient> patients = new ArrayList<>();
+        int patientsMockListSize = 30;
 
-        when(testPatient.getId()).thenReturn(testPatientId);
+        Patient patientToFind = Mockito.mock();
+        when(patientToFind.getId()).thenReturn(Long.valueOf(1));
 
-        List<Patient> patients = new ArrayList<Patient>() {
-            {
-                add(new Patient());
-                add(new Patient());
-                add(new Patient());
-                add(testPatient);
-                add(new Patient());
-                add(new Patient());
-            }
-        };
+        for (int i = 0; i < patientsMockListSize; i++) {
+            Patient patient = Mockito.mock();
+            patients.add(patient);
+        }
+
+        // no patient to find
+        patientObservable = new PatientObservable(patients);
+        assertTrue(-1 == patientObservable.getIndexOfPatient(patientToFind.getId()));
+
+        patients.add(patientToFind);
 
         patientObservable = new PatientObservable(patients);
 
-        assertTrue(testPatientIndex == patientObservable.getIndexOfPatient(testPatientId));
+        // patient to find
+        assertTrue(patients.indexOf(patientToFind) == patientObservable.getIndexOfPatient(patientToFind.getId()));
     }
 }
