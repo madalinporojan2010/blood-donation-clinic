@@ -1,11 +1,10 @@
-package application.repository;
+package application.repository.jpa.mysql;
 
 import application.model.BloodBank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,8 +13,7 @@ import java.util.List;
  * Repository class used for the blood bank table.
  * Usual CRUD database operations.
  */
-@Repository
-public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
+public interface IBloodBankRepository extends JpaRepository<BloodBank, Long> {
     /**
      * Retrieves all the entries from blood_bank table.
      *

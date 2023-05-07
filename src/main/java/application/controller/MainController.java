@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
  * @see /api/{api_version}/
  */
 @RestController
-@RequestMapping("/")
 @CrossOrigin
 public class MainController {
     private final MainService mainService;

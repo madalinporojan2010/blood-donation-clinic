@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import application.model.BloodType;
 import application.model.Patient;
 import application.model.Schedule;
-import application.repository.ScheduleRepository;
+import application.model.repository.ScheduleRepositoryModels;
 
 /**
  * Patient Observer class that implements the Observer interface. It is used for
@@ -16,15 +15,15 @@ import application.repository.ScheduleRepository;
  */
 public class PatientObserver implements Observer {
 
-    private final ScheduleRepository scheduleRepository;
+    private final ScheduleRepositoryModels scheduleRepositoryModels;
 
     /**
      * Constructor that initializes the scheduleRepository object.
      * 
      * @param scheduleRepository The schedule repository that is initialized with.
      */
-    public PatientObserver(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
+    public PatientObserver(ScheduleRepositoryModels scheduleRepositoryModels) {
+        this.scheduleRepositoryModels = scheduleRepositoryModels;
     }
 
     /**
@@ -34,11 +33,11 @@ public class PatientObserver implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Patient patient = (Patient) arg;
-        List<Schedule> foundSchedules = scheduleRepository.findAllByPatientId(patient.getId());
+        List<Schedule> foundSchedules = scheduleRepositoryModels.findAllByPatientId(patient.getId());
         foundSchedules.forEach(schedule -> {
             Schedule newSchedule = schedule.copy();
             newSchedule.setBloodType(patient.getBloodType());
-            scheduleRepository.save(newSchedule);
+            scheduleRepositoryModels.save(newSchedule);
         });
     }
 }

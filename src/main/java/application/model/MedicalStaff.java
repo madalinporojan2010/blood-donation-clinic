@@ -18,6 +18,9 @@ public class MedicalStaff {
     private String phone;
     private String specialization;
 
+    public void setPassword(String password) {
+    }
+
     public Long getId() {
         return id;
     }

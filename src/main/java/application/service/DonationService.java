@@ -1,8 +1,10 @@
 package application.service;
 
 import application.model.Donation;
+import application.model.repository.DonationRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.DonationRepository;
+import application.repository.jpa.DonationRepositoryJPA;
+import application.repository.jpa.mysql.IDonationRepository;
 import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +17,15 @@ import java.util.List;
 @Service
 public class DonationService {
 
-    private final DonationRepository donationRepository;
+    private final DonationRepositoryModels donationRepositoryModels;
 
     /**
      * DonationRepository constructor used for repositories initialization.
      * 
-     * @param donationRepository Schedule table repository
+     * @param iDonationRepository Schedule table repository
      */
-    public DonationService(DonationRepository donationRepository) {
-        this.donationRepository = donationRepository;
+    public DonationService(IDonationRepository iDonationRepository) {
+        this.donationRepositoryModels = new DonationRepositoryJPA(iDonationRepository);
     }
 
     /**
@@ -34,7 +36,7 @@ public class DonationService {
     public List<Donation> findAllDonations() {
         List<Donation> fetchedDonation = null;
         try {
-            fetchedDonation = donationRepository.findAll();
+            fetchedDonation = donationRepositoryModels.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -50,7 +52,7 @@ public class DonationService {
     public StatusResponse saveDonation(Donation donation) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            donationRepository.save(donation);
+            donationRepositoryModels.save(donation);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -68,8 +70,8 @@ public class DonationService {
     public StatusResponse updateDonation(Donation donation) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (donationRepository.existsById(donation.getId())) {
-                donationRepository.save(donation);
+            if (donationRepositoryModels.existsById(donation.getId())) {
+                donationRepositoryModels.save(donation);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -90,8 +92,8 @@ public class DonationService {
     public StatusResponse deleteDonation(Long donationId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (donationRepository.existsById(donationId)) {
-                donationRepository.deleteById(donationId);
+            if (donationRepositoryModels.existsById(donationId)) {
+                donationRepositoryModels.deleteById(donationId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

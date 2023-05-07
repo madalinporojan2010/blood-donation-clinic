@@ -1,8 +1,10 @@
 package application.service;
 
 import application.model.Schedule;
+import application.model.repository.ScheduleRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.ScheduleRepository;
+import application.repository.jpa.ScheduleRepositoryJPA;
+import application.repository.jpa.mysql.IScheduleRepository;
 import application.utils.ResponseMessage;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +17,15 @@ import java.util.List;
 @Service
 public class ScheduleService {
 
-    private final ScheduleRepository scheduleRepository;
+    private final ScheduleRepositoryModels scheduleRepositoryModels;
 
     /**
-     * ScheduleService constructor used for repositories initialization.
+     * IScheduleRepository constructor used for repositories initialization.
      * 
-     * @param scheduleRepository Schedule table repository
+     * @param iScheduleRepository Schedule table repository
      */
-    public ScheduleService(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
+    public ScheduleService(IScheduleRepository iScheduleRepository) {
+        this.scheduleRepositoryModels = new ScheduleRepositoryJPA(iScheduleRepository);
     }
 
     /**
@@ -34,7 +36,7 @@ public class ScheduleService {
     public List<Schedule> findAllSchedules() {
         List<Schedule> fetchedSchedule = null;
         try {
-            fetchedSchedule = scheduleRepository.findAll();
+            fetchedSchedule = scheduleRepositoryModels.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -50,7 +52,7 @@ public class ScheduleService {
     public StatusResponse saveSchedule(Schedule schedule) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            scheduleRepository.save(schedule);
+            scheduleRepositoryModels.save(schedule);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -68,8 +70,8 @@ public class ScheduleService {
     public StatusResponse updateSchedule(Schedule schedule) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (scheduleRepository.existsById(schedule.getId())) {
-                scheduleRepository.save(schedule);
+            if (scheduleRepositoryModels.existsById(schedule.getId())) {
+                scheduleRepositoryModels.save(schedule);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -90,8 +92,8 @@ public class ScheduleService {
     public StatusResponse deleteSchedule(Long scheduleId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (scheduleRepository.existsById(scheduleId)) {
-                scheduleRepository.deleteById(scheduleId);
+            if (scheduleRepositoryModels.existsById(scheduleId)) {
+                scheduleRepositoryModels.deleteById(scheduleId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);

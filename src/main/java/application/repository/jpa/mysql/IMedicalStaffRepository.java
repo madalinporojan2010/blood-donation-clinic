@@ -1,4 +1,4 @@
-package application.repository;
+package application.repository.jpa.mysql;
 
 import application.model.MedicalStaff;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Repository class used for the medical staff table.
  * Usual CRUD database operations.
  */
-public interface MedicalStaffRepository extends JpaRepository<MedicalStaff, Long> {
+public interface IMedicalStaffRepository extends JpaRepository<MedicalStaff, Long> {
 }

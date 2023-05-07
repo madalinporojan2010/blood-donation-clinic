@@ -1,9 +1,12 @@
 package application.service;
 
 import application.model.Patient;
+import application.model.repository.PatientRepositoryModels;
 import application.model.response.StatusResponse;
-import application.repository.PatientRepository;
-import application.repository.ScheduleRepository;
+import application.repository.jpa.PatientRepositoryJPA;
+import application.repository.jpa.ScheduleRepositoryJPA;
+import application.repository.jpa.mysql.IPatientRepository;
+import application.repository.jpa.mysql.IScheduleRepository;
 import application.service.observe.PatientObservable;
 import application.service.observe.PatientObserver;
 import application.utils.ResponseMessage;
@@ -19,7 +22,7 @@ import java.util.Optional;
 @Service
 public class PatientService {
 
-    private final PatientRepository patientRepository;
+    private final PatientRepositoryModels patientRepositoryModels;
     private final PatientObservable patientObservable;
     private final PatientObserver patientObserver;
 
@@ -27,13 +30,13 @@ public class PatientService {
      * PatientService constructor used for repositories and observables
      * initialization.
      * 
-     * @param patientRepository  Patient table repository
-     * @param scheduleRepository Schedule table repository
+     * @param iPatientRepository  Patient table repository
+     * @param iScheduleRepository Schedule table repository
      */
-    public PatientService(PatientRepository patientRepository, ScheduleRepository scheduleRepository) {
-        this.patientRepository = patientRepository;
+    public PatientService(IPatientRepository iPatientRepository, IScheduleRepository iScheduleRepository) {
+        this.patientRepositoryModels = new PatientRepositoryJPA(iPatientRepository);
 
-        this.patientObserver = new PatientObserver(scheduleRepository);
+        this.patientObserver = new PatientObserver(new ScheduleRepositoryJPA(iScheduleRepository));
         this.patientObservable = new PatientObservable();
         this.patientObservable.addObserver(patientObserver);
     }
@@ -46,7 +49,7 @@ public class PatientService {
     public List<Patient> findAllPatients() {
         List<Patient> fetchedPatient = null;
         try {
-            fetchedPatient = patientRepository.findAll();
+            fetchedPatient = patientRepositoryModels.findAll();
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
         }
@@ -68,7 +71,7 @@ public class PatientService {
                 patientObservable.addPatient(patient);
             }
 
-            patientRepository.save(patient);
+            patientRepositoryModels.save(patient);
             statusResponse.setMessage(ResponseMessage.SUCCESS);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
@@ -88,7 +91,7 @@ public class PatientService {
     public StatusResponse updatePatient(Patient patient) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (patientRepository.existsById(patient.getId())) {
+            if (patientRepositoryModels.existsById(patient.getId())) {
                 if (patient.getBloodType() != null && this.patientObservable.getPatients() != null) {
 
                     Optional<Patient> newPatientOptional = this.patientObservable.getPatients().stream()
@@ -106,7 +109,7 @@ public class PatientService {
                     }
                 }
 
-                patientRepository.save(patient);
+                patientRepositoryModels.save(patient);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
@@ -128,10 +131,10 @@ public class PatientService {
     public StatusResponse deletePatient(Long patientId) {
         StatusResponse statusResponse = new StatusResponse();
         try {
-            if (patientRepository.existsById(patientId)) {
+            if (patientRepositoryModels.existsById(patientId)) {
                 this.patientObservable.removePatient(patientId);
 
-                patientRepository.deleteById(patientId);
+                patientRepositoryModels.deleteById(patientId);
                 statusResponse.setMessage(ResponseMessage.SUCCESS);
             } else {
                 statusResponse.setMessage(ResponseMessage.ERROR_ENTRY_NOT_PRESENT);
