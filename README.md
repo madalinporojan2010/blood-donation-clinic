@@ -1,4 +1,6 @@
 # Blood Donation Clinic
+[![My Tech Stack](https://github-readme-tech-stack.vercel.app/api/cards?title=Project%20Tech%20Stack&lineCount=1&theme=night_owl&line1=spring,spring,6DB33F;apachemaven,apache%20maven,C71A36;apachetomcat,tomcat,F8DC75;react,react,61DAFB;node.js,node.js,339933;)](https://github-readme-tech-stack.vercel.app/api/cards?title=Project%20Tech%20Stack&lineCount=1&theme=night_owl&line1=spring,spring,6DB33F;apachemaven,apache%20maven,C71A36;apachetomcat,tomcat,F8DC75;react,react,61DAFB;node.js,node.js,339933;)
+
 ## Introducere
  Acest proiect reprezinta o aplicatie pentru gestionarea unei clinici de donatii de sange, la care se pot face programari individuale, la asistenti/medici alesi dupa propria dorinta. Dupa o programare la clinica, pacientul se prezinta la ora si data confirmata de acesta pe mail, cat si pe site-ul web corespunzator. Aplicatia dispune de urmatoarele functionalitati:
 
