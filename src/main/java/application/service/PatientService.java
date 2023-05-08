@@ -23,6 +23,7 @@ import java.util.Optional;
  * Usual calls to the Repository Class, fetching database table data.
  */
 @Service
+@SuppressWarnings("deprecation")
 public class PatientService {
 
     private final PatientRepositoryModels patientRepositoryModels;

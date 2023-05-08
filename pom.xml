@@ -11,7 +11,7 @@
     </parent>
     <groupId>application</groupId>
     <artifactId>blood-donation-clinic</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Blood Donation Clinic</name>
     <description>Blood donation clinic project made in Spring Boot</description>
 

@@ -10,6 +10,7 @@ import application.model.Patient;
  * Patient Observable class meant for Patient table, that extends the Observable
  * class.
  */
+@SuppressWarnings("deprecation")
 public class PatientObservable extends Observable {
     private List<Patient> patients;
 

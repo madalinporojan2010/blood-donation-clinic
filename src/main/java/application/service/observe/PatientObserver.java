@@ -12,6 +12,7 @@ import application.model.repository.ScheduleRepositoryModels;
  * monitoring the changes of the DB patients properties
  * and updating the other tables accordingly.
  */
+@SuppressWarnings("deprecation")
 public class PatientObserver implements Observer {
 
     private ScheduleRepositoryModels scheduleRepositoryModels;
