@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/medicalStaff")
-@CrossOrigin
 public class MedicalStaffController {
     private final MedicalStaffService medicalStaffService;
 

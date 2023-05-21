@@ -23,7 +23,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/patient")
-@CrossOrigin
 public class PatientController {
     private final PatientService patientService;
 
@@ -83,6 +82,7 @@ public class PatientController {
         } else {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+
         return new ResponseEntity<>(saveResponse, httpStatus);
     }
 

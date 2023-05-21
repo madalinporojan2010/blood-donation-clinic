@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/bloodType")
-@CrossOrigin
 public class BloodTypeController {
     private final BloodTypeService bloodTypeService;
 

@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/donation")
-@CrossOrigin
 public class DonationController {
     private final DonationService donationService;
 

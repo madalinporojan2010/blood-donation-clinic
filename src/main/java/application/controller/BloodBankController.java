@@ -22,7 +22,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/bloodBank")
-@CrossOrigin
 public class BloodBankController {
     private final BloodBankService bloodBankService;
 
