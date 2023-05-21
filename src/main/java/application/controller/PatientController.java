@@ -3,6 +3,7 @@ package application.controller;
 import application.model.Patient;
 import application.model.request.PatientRequest;
 import application.model.response.FetchPatientsResponse;
+import application.model.response.SaveResponse;
 import application.model.response.StatusResponse;
 import application.service.PatientService;
 import application.utils.ResponseMessage;
@@ -72,17 +73,17 @@ public class PatientController {
      * @see "/api/{api_version}/patient POST"
      */
     @PostMapping("")
-    public ResponseEntity<StatusResponse> savePatient(@RequestBody PatientRequest patientRequest) {
-        StatusResponse statusResponse = patientService.savePatient(patientRequest.getPatient());
+    public ResponseEntity<SaveResponse<Patient>> savePatient(@RequestBody PatientRequest patientRequest) {
+        SaveResponse<Patient> saveResponse = patientService.savePatient(patientRequest.getPatient());
 
         HttpStatus httpStatus = HttpStatus.OK;
 
-        if (statusResponse.getMessage().equals(ResponseMessage.SUCCESS)) {
+        if (saveResponse.getEntity() != null) {
             httpStatus = HttpStatus.OK;
         } else {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-        return new ResponseEntity<>(statusResponse, httpStatus);
+        return new ResponseEntity<>(saveResponse, httpStatus);
     }
 
     /**

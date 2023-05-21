@@ -3,6 +3,7 @@ package application.service;
 import application.model.Patient;
 import application.model.repository.PatientRepositoryModels;
 import application.model.repository.ScheduleRepositoryModels;
+import application.model.response.SaveResponse;
 import application.model.response.StatusResponse;
 import application.repository.jpa.PatientRepositoryJPA;
 import application.repository.jpa.ScheduleRepositoryJPA;
@@ -108,8 +109,8 @@ public class PatientService {
      * @param patient Given Patient request body.
      * @return Success or error message.
      */
-    public StatusResponse savePatient(Patient patient) {
-        StatusResponse statusResponse = new StatusResponse();
+    public SaveResponse<Patient> savePatient(Patient patient) {
+        SaveResponse<Patient> saveResponse = new SaveResponse<>();
         try {
 
             if (patient.getBloodType() == null) {
@@ -117,12 +118,12 @@ public class PatientService {
             }
 
             patientRepositoryModels.save(patient);
-            statusResponse.setMessage(ResponseMessage.SUCCESS);
+            saveResponse.setEntity(patient);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
-            statusResponse.setMessage(ResponseMessage.ERROR);
+            saveResponse.setEntity(null);
         }
-        return statusResponse;
+        return saveResponse;
     }
 
     /**

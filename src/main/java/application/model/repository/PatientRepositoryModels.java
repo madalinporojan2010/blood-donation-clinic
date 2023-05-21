@@ -19,8 +19,9 @@ public interface PatientRepositoryModels {
      * Generic save method for patient repository.
      * 
      * @param patient the given patient to save.
+     * @return the saved patient with the id from DB
      */
-    void save(Patient patient);
+    Patient save(Patient patient);
 
     /**
      * Generic existsById method for patient repository.

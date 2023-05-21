@@ -27,8 +27,9 @@ public class PatientRepositoryJPA implements PatientRepositoryModels {
     }
 
     @Override
-    public void save(Patient medicalStaff) {
-        iPatientRepository.save(medicalStaff);
+    public Patient save(Patient medicalStaff) {
+        Patient savedPatient = iPatientRepository.saveAndFlush(medicalStaff);
+        return savedPatient;
     }
 
     @Override

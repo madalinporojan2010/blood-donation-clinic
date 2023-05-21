@@ -79,13 +79,13 @@ public class TestPatient {
 
                 // test for null blood type
                 when(patient.getBloodType()).thenReturn(null);
-                assertEquals(ResponseMessage.SUCCESS,
-                                patientService.savePatient(patient).getMessage());
+                when(this.patientRepositoryModels.save(patient)).thenReturn(patient);
+                assertEquals(patient, patientService.savePatient(patient).getEntity());
 
                 // test for not null blood type
                 when(patient.getBloodType()).thenReturn(Mockito.mock());
-                assertEquals(ResponseMessage.SUCCESS,
-                                patientService.savePatient(patient).getMessage());
+                when(this.patientRepositoryModels.save(patient)).thenReturn(patient);
+                assertEquals(patient, patientService.savePatient(patient).getEntity());
 
                 verify(patientObservable, times(1)).addPatient(patient);
                 verify(patientRepositoryModels, times(2)).save(patient);
