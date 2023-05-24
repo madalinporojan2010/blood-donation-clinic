@@ -117,8 +117,8 @@ public class PatientService {
                 patientObservable.addPatient(patient);
             }
 
-            patientRepositoryModels.save(patient);
-            saveResponse.setEntity(patient);
+            Patient newPatient = patientRepositoryModels.save(patient);
+            saveResponse.setEntity(newPatient);
         } catch (Exception e) {
             ResponseMessage.printMethodErrorString(this.getClass(), e);
             saveResponse.setEntity(null);

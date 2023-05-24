@@ -1,0 +1,660 @@
+{
+	"info": {
+		"_postman_id": "575fbb16-23f7-4428-abb1-daa1ffbd6007",
+		"name": "Blood Donation Clinic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26440334"
+	},
+	"item": [
+		{
+			"name": "Blood Bank",
+			"item": [
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/bloodBank",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodBank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bloodBank\": {\r\n        \"bloodType\": {\r\n            \"id\": 3\r\n        },\r\n        \"quantity\": 420\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bloodBank",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodBank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bloodBank\": {\r\n        \"id\": 3,\r\n        \"quantity\": 30\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bloodBank",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodBank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bloodBank/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodBank",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Schedule",
+			"item": [
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/schedule",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"schedule\": {\r\n        \"patient\": {\r\n            \"id\": 1\r\n        },\r\n        \"medicalStaff\": {\r\n            \"id\": 1\r\n        },\r\n        \"bloodType\": {\r\n            \"id\": 1\r\n        },\r\n        \"arrivalTime\": \"2022-03-09T22:00:00.000+00:00\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/schedule",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"schedule\": {\r\n        \"id\": 1,\r\n        \"patient\": {\r\n            \"id\": 1\r\n        },\r\n        \"medicalStaff\": {\r\n            \"id\": 2\r\n        },\r\n        \"bloodType\": {\r\n            \"id\": 4\r\n        },\r\n        \"arrivalTime\": \"2022-03-09T22:00:00.000+00:00\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/schedule",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/schedule/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedule",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blood Type",
+			"item": [
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/bloodType",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bloodType\": {\r\n        \"bloodType\": \"A\",\r\n        \"description\": \"test\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bloodType",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bloodType\": {\r\n        \"id\": 11,\r\n        \"bloodType\": \"CC\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bloodType",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bloodType"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/schedule/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"schedule",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medical Staff",
+			"item": [
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/medicalStaff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"medicalStaff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicalStaff\": {\r\n        \"age\": 32,\r\n        \"cnp\": \"50012312\",\r\n        \"name\": \"Test\",\r\n        \"phone\": \"0412321523\",\r\n        \"specialization\": \"TestTest\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/medicalStaff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"medicalStaff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicalStaff\": {\r\n        \"id\": 14,\r\n        \"age\": \"412\",\r\n        \"cnp\": \"1\",\r\n        \"name\": \"a\",\r\n        \"phone\": \"66\",\r\n        \"specialization\": \"testttt\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/medicalStaff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"medicalStaff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/medicalStaff/14",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"medicalStaff",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patient",
+			"item": [
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/patient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient\": {\r\n        \"address\": \"Mures\",\r\n        \"age\": 32,\r\n        \"cnp\": \"50012312\",\r\n        \"contactPersonName\": \"TestContact\",\r\n        \"contactPersonPhone\": \"4021312412\",\r\n        \"name\": \"Test\",\r\n        \"phone\": \"0412321523\",\r\n        \"bloodType\": {\r\n            \"id\": 4\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/patient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"patient\": {\r\n        \"id\": \"15\",\r\n        \"address\": \"Bucuresti\",\r\n        \"age\": 32,\r\n        \"cnp\": \"50012312\",\r\n        \"contactPersonName\": \"TestContact\",\r\n        \"contactPersonPhone\": \"4021312412\",\r\n        \"name\": \"Test\",\r\n        \"phone\": \"0412321523\",\r\n        \"bloodTypeId\": 4\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/patient",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/patient/15",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"patient",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Donation",
+			"item": [
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/donation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"donation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"donation\": {\r\n        \"cause\": \"test\",\r\n        \"phone\": \"4324321\",\r\n        \"raisedAmmount\": \"50012312\",\r\n        \"medicalStaff\": {\r\n            \"id\": 2\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/donation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"donation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"donation\": {\r\n        \"id\": 18,\r\n        \"cause\": \"test1111\",\r\n        \"phone\": \"4324321\",\r\n        \"raisedAmmount\": \"50012312\",\r\n        \"medicalStaff\": {\r\n            \"id\": 2\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/donation",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"donation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/donation/19",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"donation",
+								"19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/health",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8080/api/v1",
+			"type": "string"
+		}
+	]
+}
